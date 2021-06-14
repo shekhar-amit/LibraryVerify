@@ -1,0 +1,40 @@
+apply plugin: 'maven-publish'
+
+def DEFAULT_POM_NAME='libraryVerify'
+def DEFAULT_POM_VERSION='1.0.1'  //HAR package version information.
+def DEFAULT_POM_ARTIFACT_ID="libverify" //HAR package ID.
+def DEFAULT_POM_GROUP_ID='com.applib.libverify' //Project group ID.
+def DEFAULT_POM_PACKAGING='har' //Package type. The value is fixed to har.
+def DEFAULT_POM_DESCRIPTION='Form validation for HarmonyOS'
+def LOCAL_MAVEN_REPOSITORY_URL='D:/01.localMaven/'  //URL of the local Maven repository.
+
+afterEvaluate { project ->
+    DEFAULT_POM_ARTIFACT_ID = project.name
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.debug  //Type of the HAR package: debug or release.
+                group = DEFAULT_POM_GROUP_ID
+                artifactId = DEFAULT_POM_ARTIFACT_ID
+                version = DEFAULT_POM_VERSION
+                pom {
+                    name = DEFAULT_POM_NAME
+                    description = DEFAULT_POM_DESCRIPTION
+                    packaging = DEFAULT_POM_PACKAGING
+                }
+            }
+        }
+        repositories {
+            maven {
+                url = LOCAL_MAVEN_REPOSITORY_URL  //Publish to the local Maven repository.
+                //URL, user name, and password of the remote Maven repository to which the HAR will be published.
+                /*url = REMOTE_MAVEN_REPOSITORY_URL
+                 credentials {
+                    username MAVEN_USERNAME
+                    password MAVEN_PASSWORD
+                 }
+                */
+            }
+        }
+    }
+}
