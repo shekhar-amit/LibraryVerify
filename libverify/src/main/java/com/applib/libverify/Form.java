@@ -6,12 +6,46 @@ import ohos.agp.components.Component;
 import ohos.agp.components.ComponentContainer;
 import ohos.agp.components.DirectionalLayout;
 import ohos.app.Context;
+import ohos.hiviewdfx.HiLog;
+import ohos.hiviewdfx.HiLogLabel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 public class Form extends DirectionalLayout {
 
+//    private int xx = 0;
+//
+//    private int yy = 0;
+//
+//    private int maxWidth = 0;
+//
+//    private int maxHeight = 0;
+//
+//    private int lastHeight = 0;
+//
+//    // Layout data for the child component identified by the associated index
+//    private final Map<Integer, Layout> axis = new HashMap<>();
+//
+//    private static class Layout {
+//        int positionX = 0;
+//        int positionY = 0;
+//        int width = 0;
+//        int height = 0;
+//    }
+//
+//    private void invalidateValues() {
+//        xx = 0;
+//        yy = 0;
+//        maxWidth = 0;
+//        maxHeight = 0;
+//        axis.clear();
+//    }
+
+    static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0x00201, "MY_TAG");
     private static final String TAG = Form.class.toString();
     // activity
     private Ability mActivity;
@@ -54,6 +88,9 @@ public class Form extends DirectionalLayout {
             int childCount = getChildCount();
 
             // TODO: Add the activity root view validation
+//            if(childCount == 0 && mActivity != null)
+//                getChildViews(((ViewGroup) mActivity.getWindow().getDecorView().findViewById(android.R.id.content)));
+
             if(childCount == 0 && mViewGroupRoot != null)
                 getChildViews(mViewGroupRoot);
             else
@@ -198,4 +235,77 @@ public class Form extends DirectionalLayout {
         form.setInputValidatorList(builder.inputValidatorList);
         return form;
     }
+//
+//
+//    private void addChild(Component component, int id, int layoutWidth) {
+//        Layout layout = new Layout();
+//        layout.positionX = xx + component.getMarginLeft();
+//        layout.positionY = yy + component.getMarginTop();
+//        layout.width = component.getEstimatedWidth();
+//        layout.height = component.getEstimatedHeight();
+//        if ((xx + layout.width) > layoutWidth) {
+//            xx = 0;
+//            yy += lastHeight;
+//            lastHeight = 0;
+//            layout.positionX = xx + component.getMarginLeft();
+//            layout.positionY = yy + component.getMarginTop();
+//        }
+//        axis.put(id, layout);
+//        lastHeight = Math.max(lastHeight, layout.height + component.getMarginBottom());
+//        xx += layout.width + component.getMarginRight();
+//        maxWidth = Math.max(maxWidth, layout.positionX + layout.width);
+//        maxHeight = Math.max(maxHeight, layout.positionY + layout.height);
+//    }
+//
+//    @Override
+//    public boolean onEstimateSize(int widthEstimatedConfig, int heightEstimatedConfig) {
+//
+//        // Notify child components in the container component to perform measurement.
+//        measureChildren(widthEstimatedConfig, heightEstimatedConfig);
+//        int width = Component.EstimateSpec.getSize(widthEstimatedConfig);
+//
+//        // Associate the index of the child component with its layout data.
+//        for (int idx = 0; idx < getChildCount(); idx++) {
+//            Component childView = getComponentAt(idx);
+//            addChild(childView, idx, width);
+//        }
+//
+//        setEstimatedSize(
+//                Component.EstimateSpec.getChildSizeWithMode(maxWidth, widthEstimatedConfig, 0),
+//                Component.EstimateSpec.getChildSizeWithMode(maxHeight, heightEstimatedConfig, 0));
+//        return true;
+//    }
+//
+//    private void measureChildren(int widthEstimatedConfig, int heightEstimatedConfig) {
+//        for (int idx = 0; idx < getChildCount(); idx++) {
+//            Component childView = getComponentAt(idx);
+//            if (childView != null) {
+//                measureChild(childView, widthEstimatedConfig, heightEstimatedConfig);
+//            }
+//        }
+//    }
+//
+//    private void measureChild(Component child, int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
+//        ComponentContainer.LayoutConfig lc = child.getLayoutConfig();
+//        int childWidthMeasureSpec = EstimateSpec.getChildSizeWithMode(
+//                lc.width, parentWidthMeasureSpec, EstimateSpec.UNCONSTRAINT);
+//        int childHeightMeasureSpec = EstimateSpec.getChildSizeWithMode(
+//                lc.height, parentHeightMeasureSpec, EstimateSpec.UNCONSTRAINT);
+//        child.estimateSize(childWidthMeasureSpec, childHeightMeasureSpec);
+//    }
+//
+//    @Override
+//    public boolean onArrange(int left, int top, int width, int height) {
+//
+//        // Arrange child components.
+//        for (int idx = 0; idx < getChildCount(); idx++) {
+//            Component childView = getComponentAt(idx);
+//            Layout layout = axis.get(idx);
+//            if (layout != null) {
+//                childView.arrange(layout.positionX, layout.positionY, layout.width, layout.height);
+//            }
+//        }
+//        HiLog.debug(LABEL,"REACHED HERE");
+//        return true;
+//    }
 }

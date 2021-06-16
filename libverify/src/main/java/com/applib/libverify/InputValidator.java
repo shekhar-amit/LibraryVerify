@@ -4,9 +4,45 @@ import com.applib.libverify.validator.*;
 import ohos.agp.components.*;
 import ohos.agp.text.Layout;
 import ohos.app.Context;
+import ohos.hiviewdfx.Debug;
+import ohos.hiviewdfx.HiLog;
+import ohos.hiviewdfx.HiLogLabel;
 
-public class InputValidator extends DependentLayout {
+import java.util.HashMap;
+import java.util.Map;
 
+public class InputValidator extends DependentLayout implements ComponentContainer.EstimateSizeListener,
+        ComponentContainer.ArrangeListener {
+
+    private int xx = 0;
+
+    private int yy = 0;
+
+    private int maxWidth = 0;
+
+    private int maxHeight = 0;
+
+    private int lastHeight = 0;
+
+    // Layout data for the child component identified by the associated index
+    private final Map<Integer, Layout> axis = new HashMap<>();
+
+    private static class Layout {
+        int positionX = 0;
+        int positionY = 0;
+        int width = 0;
+        int height = 0;
+    }
+
+    private void invalidateValues() {
+        xx = 0;
+        yy = 0;
+        maxWidth = 0;
+        maxHeight = 0;
+        axis.clear();
+    }
+
+    static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0x00201, "MY_TAG");
     private static final String TAG = InputValidator.class.toString();
     // context
     private Context mContext;
@@ -32,11 +68,6 @@ public class InputValidator extends DependentLayout {
     // build
     private boolean mBuilt = false;
 
-//    private static final String BOOTSTRAP_CIRCLE_COLOR = "circleColor";
-//    private static final String BOOTSTRAP_CIRCLE_LABEL = "circleLabel";
-//    private static final String BOOTSTRAP_LABEL_COLOR = "labelColor";
-//    private static final String BOOTSTRAP_CIRCLE_RADIUS = "radius";
-
     public InputValidator(Context context) {
         super(context);
         mContext = context;
@@ -45,6 +76,9 @@ public class InputValidator extends DependentLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        HiLog.debug(LABEL,"REACHED HERE BASIC");
+        setEstimateSizeListener(this);
+        setArrangeListener(this);
     }
 
     public InputValidator(Context context, AttrSet attrs) {
@@ -55,6 +89,8 @@ public class InputValidator extends DependentLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        setEstimateSizeListener(this);
+        setArrangeListener(this);
     }
 
     /**
@@ -90,26 +126,80 @@ public class InputValidator extends DependentLayout {
         }
     }
 
-//    @Override
-//    public boolean onArrange(int i, int i1, int i2, int i3) {
-//
-//
-//
-//
-//        // get edit text
-//        int childCount = getChildCount();
-//        // only one edit text per input validator
-//        if(childCount == 0 || childCount > 1)
-//            try {
-//                throw new Exception("InputValidator must contain only one EditText");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        mEditText = (TextField) getComponentAt(0);
-//
-//        // build validator
-//        buildValidator();
-//    }
+    private void addChild(Component component, int id, int layoutWidth) {
+        Layout layout = new Layout();
+        layout.positionX = xx + component.getMarginLeft();
+        layout.positionY = yy + component.getMarginTop();
+        layout.width = component.getEstimatedWidth();
+        layout.height = component.getEstimatedHeight();
+        if ((xx + layout.width) > layoutWidth) {
+            xx = 0;
+            yy += lastHeight;
+            lastHeight = 0;
+            layout.positionX = xx + component.getMarginLeft();
+            layout.positionY = yy + component.getMarginTop();
+        }
+        axis.put(id, layout);
+        lastHeight = Math.max(lastHeight, layout.height + component.getMarginBottom());
+        xx += layout.width + component.getMarginRight();
+        maxWidth = Math.max(maxWidth, layout.positionX + layout.width);
+        maxHeight = Math.max(maxHeight, layout.positionY + layout.height);
+    }
+
+    @Override
+    public boolean onEstimateSize(int widthEstimatedConfig, int heightEstimatedConfig) {
+
+        // Notify child components in the container component to perform measurement.
+        measureChildren(widthEstimatedConfig, heightEstimatedConfig);
+        int width = Component.EstimateSpec.getSize(widthEstimatedConfig);
+
+        // Associate the index of the child component with its layout data.
+        for (int idx = 0; idx < getChildCount(); idx++) {
+            Component childView = getComponentAt(idx);
+            addChild(childView, idx, width);
+        }
+
+        setEstimatedSize(
+                Component.EstimateSpec.getChildSizeWithMode(maxWidth, widthEstimatedConfig, 0),
+                Component.EstimateSpec.getChildSizeWithMode(maxHeight, heightEstimatedConfig, 0));
+        return true;
+    }
+
+    private void measureChildren(int widthEstimatedConfig, int heightEstimatedConfig) {
+        for (int idx = 0; idx < getChildCount(); idx++) {
+            Component childView = getComponentAt(idx);
+            if (childView != null) {
+                measureChild(childView, widthEstimatedConfig, heightEstimatedConfig);
+            }
+        }
+    }
+
+    private void measureChild(Component child, int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
+        ComponentContainer.LayoutConfig lc = child.getLayoutConfig();
+        int childWidthMeasureSpec = EstimateSpec.getChildSizeWithMode(
+                lc.width, parentWidthMeasureSpec, EstimateSpec.UNCONSTRAINT);
+        int childHeightMeasureSpec = EstimateSpec.getChildSizeWithMode(
+                lc.height, parentHeightMeasureSpec, EstimateSpec.UNCONSTRAINT);
+        child.estimateSize(childWidthMeasureSpec, childHeightMeasureSpec);
+    }
+
+    //TODO: Add onLayout
+    @Override
+    public boolean onArrange(int left, int top, int width, int height) {
+
+        // Arrange child components.
+        for (int idx = 0; idx < getChildCount(); idx++) {
+            Component childView = getComponentAt(idx);
+            Layout layout = axis.get(idx);
+            if (layout != null) {
+                childView.arrange(layout.positionX, layout.positionY, layout.width, layout.height);
+            }
+        }
+        HiLog.debug(LABEL,"REACHED HERE");
+        mEditText = (TextField) getComponentAt(0);
+        buildValidator();
+        return true;
+    }
 
 //    @Override
 //    protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -162,6 +252,9 @@ public class InputValidator extends DependentLayout {
 
         // mBuilt
         mBuilt = true;
+
+//        setEstimateSizeListener(this);
+//        setArrangeListener(this);
     }
 
 

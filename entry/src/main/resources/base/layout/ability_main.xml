@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DirectionalLayout
+<DependentLayout
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
     ohos:height="match_parent"
     ohos:width="match_parent"
     ohos:orientation="vertical">
 
-    <Text
-        ohos:id="$+id:text_helloworld"
+    <DirectionalLayout
+        ohos:id="$+id:form"
         ohos:height="match_content"
         ohos:width="match_content"
-        ohos:background_element="$graphic:background_ability_main"
-        ohos:layout_alignment="horizontal_center"
-        ohos:text="$string:mainability_HelloWorld"
-        ohos:text_size="50px"
-        />
+        ohos:padding="16fp">
 
-</DirectionalLayout>
+        <com.applib.libverify.InputValidator
+            ohos:id="$+id:required_validator"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            app:requiredMessage="Please enter a value">
+
+            <TextField
+                ohos:height="match_parent"
+                ohos:width="match_content"
+                ohos:text_size="25fp"
+                ohos:hint="Custom req message"/>
+
+        </com.applib.libverify.InputValidator>
+
+        <Button
+            ohos:id="$+id:validate"
+            ohos:height="match_content"
+            ohos:width="match_content"
+            ohos:text="validate"
+            ohos:text_size="30fp"/>
+
+    </DirectionalLayout>
+
+</DependentLayout>
