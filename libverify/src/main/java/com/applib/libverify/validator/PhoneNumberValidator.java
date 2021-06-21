@@ -7,7 +7,9 @@ import com.applib.libverify.ResourceTable;
 public class PhoneNumberValidator extends AbstractValidator {
 
     public PhoneNumberValidator() {
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_phone_number);
+        // TODO: Fix string
+        mErrorMessage = "This phone number is not valid";
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_phone_number);
     }
 
     @Override

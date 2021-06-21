@@ -13,18 +13,22 @@ public class RangeValueValidator extends AbstractValidator {
 
         mMinValue = minValue;
         mMaxValue = maxValue;
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_value, mMinValue, mMaxValue);
+        // TODO: Fix string
+        mErrorMessage = "This field must be between "+mMinValue+" and "+mMinValue;
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_value, mMinValue, mMaxValue);
     }
 
     @Override
     public boolean isValid(String value) {
         try {
             double d = Double.parseDouble(value);
-            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_value, mMinValue, mMaxValue);
+            mErrorMessage = "This field must be between "+mMinValue+" and "+mMinValue;
+//            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_value, mMinValue, mMaxValue);
             return d >= mMinValue && d <= mMaxValue;
         }
         catch(NumberFormatException nfe) {
-            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_number);
+            mErrorMessage = "This field must be between "+mMinValue+" and "+mMinValue;
+//            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_number);
             return false;
         }
     }

@@ -1,46 +1,14 @@
 package com.applib.libverify;
 
 import com.applib.libverify.validator.*;
-import ohos.agp.components.*;
-import ohos.agp.text.Layout;
+import ohos.agp.components.AttrSet;
+import ohos.agp.components.DependentLayout;
+import ohos.agp.components.TextField;
 import ohos.app.Context;
-import ohos.hiviewdfx.Debug;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class InputValidator extends DependentLayout implements ComponentContainer.EstimateSizeListener,
-        ComponentContainer.ArrangeListener {
-
-    private int xx = 0;
-
-    private int yy = 0;
-
-    private int maxWidth = 0;
-
-    private int maxHeight = 0;
-
-    private int lastHeight = 0;
-
-    // Layout data for the child component identified by the associated index
-    private final Map<Integer, Layout> axis = new HashMap<>();
-
-    private static class Layout {
-        int positionX = 0;
-        int positionY = 0;
-        int width = 0;
-        int height = 0;
-    }
-
-    private void invalidateValues() {
-        xx = 0;
-        yy = 0;
-        maxWidth = 0;
-        maxHeight = 0;
-        axis.clear();
-    }
+public class InputValidator extends DependentLayout {
 
     static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0x00201, "MY_TAG");
     private static final String TAG = InputValidator.class.toString();
@@ -68,6 +36,9 @@ public class InputValidator extends DependentLayout implements ComponentContaine
     // build
     private boolean mBuilt = false;
 
+    private static final String ATTRIBUTE_REQUIRED = "required";
+    private static final String ATTRIBUTE_REQUIRED_MESSAGE = "required_message";
+
     public InputValidator(Context context) {
         super(context);
         mContext = context;
@@ -76,9 +47,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
         } catch (Exception e) {
             e.printStackTrace();
         }
-        HiLog.debug(LABEL,"REACHED HERE BASIC");
-        setEstimateSizeListener(this);
-        setArrangeListener(this);
+        System.out.println("AMIT : CONSTRUCTOR");
     }
 
     public InputValidator(Context context, AttrSet attrs) {
@@ -89,18 +58,16 @@ public class InputValidator extends DependentLayout implements ComponentContaine
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setEstimateSizeListener(this);
-        setArrangeListener(this);
+        System.out.println("AMIT : CONSTRUCTOR2");
+        System.out.println("AMIT : REQUIRED MESSAGE "+this.mRequiredMessage);
+        System.out.println("AMIT : REQUIRED"+this.mRequired);
     }
 
-    /**
-     * Init the view with appropriate attributes
-     *
-     * @param attrs the attributes
-     */
     private void init(AttrSet attrs) {
         // attributes
+        // TODO: Fix Custom Attributes
         if (attrs != null) {
+            System.out.println("AMIT : INIT ENTERING");
             this.mRequired = attrs.getAttr("required").isPresent() ? attrs.getAttr(
                     "required").get().getBoolValue() : false;
             this.mValidatorNumber = attrs.getAttr("validator").isPresent() ? attrs.getAttr(
@@ -124,105 +91,16 @@ public class InputValidator extends DependentLayout implements ComponentContaine
             this.mRequiredMessage = attrs.getAttr("requiredMessage").isPresent() ? attrs.getAttr(
                     "requiredMessage").get().getStringValue() : null;
         }
+        System.out.println("AMIT : INIT LEAVING");
     }
 
-    private void addChild(Component component, int id, int layoutWidth) {
-        Layout layout = new Layout();
-        layout.positionX = xx + component.getMarginLeft();
-        layout.positionY = yy + component.getMarginTop();
-        layout.width = component.getEstimatedWidth();
-        layout.height = component.getEstimatedHeight();
-        if ((xx + layout.width) > layoutWidth) {
-            xx = 0;
-            yy += lastHeight;
-            lastHeight = 0;
-            layout.positionX = xx + component.getMarginLeft();
-            layout.positionY = yy + component.getMarginTop();
-        }
-        axis.put(id, layout);
-        lastHeight = Math.max(lastHeight, layout.height + component.getMarginBottom());
-        xx += layout.width + component.getMarginRight();
-        maxWidth = Math.max(maxWidth, layout.positionX + layout.width);
-        maxHeight = Math.max(maxHeight, layout.positionY + layout.height);
-    }
-
-    @Override
-    public boolean onEstimateSize(int widthEstimatedConfig, int heightEstimatedConfig) {
-
-        // Notify child components in the container component to perform measurement.
-        measureChildren(widthEstimatedConfig, heightEstimatedConfig);
-        int width = Component.EstimateSpec.getSize(widthEstimatedConfig);
-
-        // Associate the index of the child component with its layout data.
-        for (int idx = 0; idx < getChildCount(); idx++) {
-            Component childView = getComponentAt(idx);
-            addChild(childView, idx, width);
-        }
-
-        setEstimatedSize(
-                Component.EstimateSpec.getChildSizeWithMode(maxWidth, widthEstimatedConfig, 0),
-                Component.EstimateSpec.getChildSizeWithMode(maxHeight, heightEstimatedConfig, 0));
-        return true;
-    }
-
-    private void measureChildren(int widthEstimatedConfig, int heightEstimatedConfig) {
-        for (int idx = 0; idx < getChildCount(); idx++) {
-            Component childView = getComponentAt(idx);
-            if (childView != null) {
-                measureChild(childView, widthEstimatedConfig, heightEstimatedConfig);
-            }
-        }
-    }
-
-    private void measureChild(Component child, int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
-        ComponentContainer.LayoutConfig lc = child.getLayoutConfig();
-        int childWidthMeasureSpec = EstimateSpec.getChildSizeWithMode(
-                lc.width, parentWidthMeasureSpec, EstimateSpec.UNCONSTRAINT);
-        int childHeightMeasureSpec = EstimateSpec.getChildSizeWithMode(
-                lc.height, parentHeightMeasureSpec, EstimateSpec.UNCONSTRAINT);
-        child.estimateSize(childWidthMeasureSpec, childHeightMeasureSpec);
-    }
-
-    //TODO: Add onLayout
-    @Override
-    public boolean onArrange(int left, int top, int width, int height) {
-
-        // Arrange child components.
-        for (int idx = 0; idx < getChildCount(); idx++) {
-            Component childView = getComponentAt(idx);
-            Layout layout = axis.get(idx);
-            if (layout != null) {
-                childView.arrange(layout.positionX, layout.positionY, layout.width, layout.height);
-            }
-        }
-        HiLog.debug(LABEL,"REACHED HERE");
-        mEditText = (TextField) getComponentAt(0);
-        buildValidator();
-        return true;
-    }
-
-//    @Override
-//    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-//        super.on(changed, l, t, r, b);
-//        // get edit text
-//        int childCount = getChildCount();
-//        // only one edit text per input validator
-//        if(childCount == 0 || childCount > 1)
-//            try {
-//                throw new Exception("InputValidator must contain only one EditText");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        mEditText = (EditText) getChildAt(0);
-//
-//        // build validator
-//        buildValidator();
-//    }
+    //TODO: onLayout
 
     /**
      * Build the validator according to the attributes
      */
     private void buildValidator() {
+        System.out.println("AMIT : BUILD ENTERING");
 
         // get views
         getOtherEditText();
@@ -252,10 +130,8 @@ public class InputValidator extends DependentLayout implements ComponentContaine
 
         // mBuilt
         mBuilt = true;
-
-//        setEstimateSizeListener(this);
-//        setArrangeListener(this);
     }
+
 
 
     /**
@@ -305,11 +181,17 @@ public class InputValidator extends DependentLayout implements ComponentContaine
      * @return true of it is valid, false either
      */
     public boolean isValid() {
+        System.out.println("AMIT : TIV isValid ENTRY");
         // build validator
+        System.out.println("AMIT : TIV isValid 1");
         if(!mBuilt)
             buildValidator();
-
+        if(mEditText==null)
+            System.out.println("AMIT : TIV isValid 2 ");
+        else
+            System.out.println("AMIT : TIV isValid 2A ");
         String value = mEditText.getText();
+        System.out.println("AMIT : TIV isValid 3");
 
         // reset error
 //        mEditText.setError(null);
@@ -317,8 +199,10 @@ public class InputValidator extends DependentLayout implements ComponentContaine
         // test requirement
         if(!mRequiredValidator.isValid(value)) {
 //            if(mShowError) mEditText.setError(mRequiredValidator.getErrorMessage());
+            System.out.println("AMIT : TIV isValid EXIT");
             return false;
         }
+        System.out.println("AMIT : TIV isValid 4");
 
         // test validity
         if(value!=null && !value.isEmpty() && !mValidator.isValid(value)) {
@@ -327,9 +211,10 @@ public class InputValidator extends DependentLayout implements ComponentContaine
 //                if(mValidator instanceof IdenticalValidator)
 //                    mOtherEditText.setError(mValidator.getErrorMessage());
 //            }
+            System.out.println("AMIT : TIV isValid EXIT");
             return false;
         }
-
+        System.out.println("AMIT : TIV isValid EXIT");
         return true;
     }
 
@@ -386,7 +271,9 @@ public class InputValidator extends DependentLayout implements ComponentContaine
     }
 
     public void setRequiredMessage(String mRequiredMessage) {
+        System.out.println("AMIT : OLD REQUIRED MESSAGE "+this.mRequiredMessage);
         this.mRequiredMessage = mRequiredMessage;
+        System.out.println("AMIT : NEW REQUIRED MESSAGE "+this.mRequiredMessage);
     }
 
     /**
@@ -416,7 +303,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param required true if required, false either
          * @return the Builder
          */
-        public Builder required(boolean required) {
+        public InputValidator.Builder required(boolean required) {
             this.required = required;
             return this;
         }
@@ -427,7 +314,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param validator the validator
          * @return the Builder
          */
-        public Builder customValidator(AbstractValidator validator) {
+        public InputValidator.Builder customValidator(AbstractValidator validator) {
             this.validator = validator;
             return this;
         }
@@ -439,7 +326,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param validatorType the validator type
          * @return the Builder
          */
-        public Builder validatorType(int validatorType) {
+        public InputValidator.Builder validatorType(int validatorType) {
             this.validatorType = validatorType;
             return this;
         }
@@ -450,7 +337,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param minLength the min length
          * @return the Builder
          */
-        public Builder minLength(int minLength) {
+        public InputValidator.Builder minLength(int minLength) {
             this.minLength = minLength;
             return this;
         }
@@ -461,7 +348,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param maxLength the max length
          * @return the Builder
          */
-        public Builder maxLength(int maxLength) {
+        public InputValidator.Builder maxLength(int maxLength) {
             this.maxLength = maxLength;
             return this;
         }
@@ -473,7 +360,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param minValue the min value
          * @return the Builder
          */
-        public Builder minValue(int minValue) {
+        public InputValidator.Builder minValue(int minValue) {
             this.minValue = minValue;
             return this;
         }
@@ -485,7 +372,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param maxValue the max value
          * @return the Builder
          */
-        public Builder maxValue(int maxValue) {
+        public InputValidator.Builder maxValue(int maxValue) {
             this.maxValue = maxValue;
             return this;
         }
@@ -496,7 +383,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param regex the regex
          * @return the Builder
          */
-        public Builder regex(String regex) {
+        public InputValidator.Builder regex(String regex) {
             this.regex = regex;
             return this;
         }
@@ -507,7 +394,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param otherEditTextId the id of the other EditText
          * @return the Builder
          */
-        public Builder identicalAs(int otherEditTextId) {
+        public InputValidator.Builder identicalAs(int otherEditTextId) {
             this.otherEditTextId = otherEditTextId;
             return this;
         }
@@ -518,7 +405,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param editText the other EditText
          * @return the Builder
          */
-        public Builder identicalAs(TextField editText) {
+        public InputValidator.Builder identicalAs(TextField editText) {
             this.otherEditText = editText;
             return this;
         }
@@ -529,7 +416,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param errorMessage the error message
          * @return the Builder
          */
-        public Builder errorMessage(String errorMessage) {
+        public InputValidator.Builder errorMessage(String errorMessage) {
             this.errorMessage = errorMessage;
             return this;
         }
@@ -540,7 +427,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param requiredMessage the required message
          * @return the Builder
          */
-        public Builder requiredMessage(String requiredMessage) {
+        public InputValidator.Builder requiredMessage(String requiredMessage) {
             this.requiredMessage = requiredMessage;
             return this;
         }
@@ -551,7 +438,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param showError true to show, false either
          * @return the Builder
          */
-        public Builder showError(boolean showError) {
+        public InputValidator.Builder showError(boolean showError) {
             this.showError = showError;
             return this;
         }
@@ -562,7 +449,7 @@ public class InputValidator extends DependentLayout implements ComponentContaine
          * @param editText the edit text
          * @return the Builder
          */
-        public Builder on(TextField editText) {
+        public InputValidator.Builder on(TextField editText) {
             this.editText = editText;
             return this;
         }
@@ -583,23 +470,24 @@ public class InputValidator extends DependentLayout implements ComponentContaine
      * @param builder the builder
      * @return an InputValidator object
      */
-    public static InputValidator newInstance(Builder builder) {
-        InputValidator inputValidator = new InputValidator(builder.context);
-        inputValidator.setEditText(builder.editText);
-        inputValidator.setRequired(builder.required);
-        inputValidator.setCustomValidator(builder.validator);
-        inputValidator.setValidatorType(builder.validatorType);
-        inputValidator.setMinLength(builder.minLength);
-        inputValidator.setMaxLength(builder.maxLength);
-        inputValidator.setMaxValue(builder.maxValue);
-        inputValidator.setMinValue(builder.minValue);
-        inputValidator.setRegex(builder.regex);
-        inputValidator.setOtherEditText(builder.otherEditText);
-        inputValidator.setIdenticalAs(builder.otherEditTextId);
-        inputValidator.setErrorMessage(builder.errorMessage);
-        inputValidator.setRequiredMessage(builder.requiredMessage);
-        inputValidator.setShowError(builder.showError);
-        inputValidator.buildValidator();
-        return inputValidator;
+    public static InputValidator newInstance(InputValidator.Builder builder) {
+        InputValidator InputValidator = new InputValidator(builder.context);
+        InputValidator.setEditText(builder.editText);
+        InputValidator.setRequired(builder.required);
+        InputValidator.setCustomValidator(builder.validator);
+        InputValidator.setValidatorType(builder.validatorType);
+        InputValidator.setMinLength(builder.minLength);
+        InputValidator.setMaxLength(builder.maxLength);
+        InputValidator.setMaxValue(builder.maxValue);
+        InputValidator.setMinValue(builder.minValue);
+        InputValidator.setRegex(builder.regex);
+        InputValidator.setOtherEditText(builder.otherEditText);
+        InputValidator.setIdenticalAs(builder.otherEditTextId);
+        InputValidator.setErrorMessage(builder.errorMessage);
+        InputValidator.setRequiredMessage(builder.requiredMessage);
+        InputValidator.setShowError(builder.showError);
+        InputValidator.buildValidator();
+        return InputValidator;
     }
+
 }

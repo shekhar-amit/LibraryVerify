@@ -7,7 +7,9 @@ import com.applib.libverify.ResourceTable;
 public class IPValidator extends AbstractValidator {
 
     public IPValidator() {
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_ip);
+        // TODO: Fix string
+        mErrorMessage = "The IP address is not valid";
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_ip);
     }
 
     @Override

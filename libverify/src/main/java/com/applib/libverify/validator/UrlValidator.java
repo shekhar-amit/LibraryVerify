@@ -7,7 +7,9 @@ import com.applib.libverify.ResourceTable;
 public class UrlValidator extends AbstractValidator {
 
     public UrlValidator() {
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_url);
+        // TODO: Fix string
+        mErrorMessage = "This url is not valid";
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_url);
     }
 
     @Override

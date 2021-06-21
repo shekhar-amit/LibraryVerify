@@ -7,7 +7,9 @@ import com.applib.libverify.ResourceTable;
 public class EmailValidator extends AbstractValidator {
 
     public EmailValidator() {
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_email);
+        // TODO: Fix string
+        mErrorMessage = "The email is not valid";
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_email);
     }
 
     @Override

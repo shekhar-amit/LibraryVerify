@@ -11,6 +11,30 @@
     {
       "name": "mainability_HelloWorld",
       "value": "Hello World"
+    },
+    {
+      "name": "javaformability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "javaformability_HelloWorld",
+      "value": "Hello World"
+    },
+    {
+      "name": "oneformability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "oneformability_HelloWorld",
+      "value": "Hello World"
+    },
+    {
+      "name": "twoformability_description",
+      "value": "Java_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "twoformability_HelloWorld",
+      "value": "Hello World"
     }
   ]
 }

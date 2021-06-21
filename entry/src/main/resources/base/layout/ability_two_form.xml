@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DependentLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    xmlns:app="http://schemas.huawei.com/hap/res-auto"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+    <!-- form1 -->
+    <com.applib.libverify.Form
+        ohos:id="$+id:form1"
+        ohos:orientation="vertical"
+        ohos:width="match_parent"
+        ohos:height="match_content"
+        ohos:padding="16fp">
+
+        <!-- email -->
+        <com.applib.libverify.InputValidator
+            ohos:width="match_content"
+            ohos:height="match_content">
+
+            <TextField
+                ohos:width="match_parent"
+                ohos:height="match_content"
+                ohos:text_size="20fp"
+                ohos:hint="Email"/>
+
+        </com.applib.libverify.InputValidator>
+
+        <!-- password -->
+        <com.applib.libverify.InputValidator
+            ohos:width="match_content"
+            ohos:height="match_content"
+            app:required="true"
+            app:minLength="6">
+
+            <TextField
+                ohos:width="match_parent"
+                ohos:height="match_content"
+                ohos:text_input_type="pattern_password"
+                ohos:text_size="20fp"
+                ohos:hint="Password (6 char. min) *" />
+
+        </com.applib.libverify.InputValidator>
+
+        <!-- submit form -->
+        <Button
+            ohos:id="$+id:validate_form1"
+            ohos:width="match_content"
+            ohos:height="match_content"
+            ohos:text_size="20fp"
+            ohos:text="Validate form1"/>
+
+    </com.applib.libverify.Form>
+    <!-- /form1 -->
+
+    <!-- form2 -->
+    <com.applib.libverify.Form
+        ohos:id="$+id:form2"
+        ohos:orientation="vertical"
+        ohos:width="match_parent"
+        ohos:height="match_content"
+        ohos:below="$+id:form1"
+        ohos:padding="16fp">
+
+        <!-- phone number -->
+        <com.applib.libverify.InputValidator
+            ohos:id="$+id:tiv1"
+            ohos:width="match_content"
+            ohos:height="match_content"
+            app:required="true">
+
+            <TextField
+                ohos:width="match_parent"
+                ohos:height="match_content"
+                ohos:text_input_type="pattern_number"
+                ohos:text_size="20fp"
+                ohos:hint="Phone number *"/>
+
+        </com.applib.libverify.InputValidator>
+
+        <!-- age -->
+        <com.applib.libverify.InputValidator
+            ohos:width="match_content"
+            ohos:height="match_content"
+            app:minValue="12">
+
+            <TextField
+                ohos:width="match_parent"
+                ohos:height="match_content"
+                ohos:text_input_type="pattern_number"
+                ohos:text_size="20fp"
+                ohos:hint="Age (12 min)" />
+
+        </com.applib.libverify.InputValidator>
+
+        <!-- submit form -->
+        <Button
+            ohos:id="$+id:validate_form2"
+            ohos:width="match_content"
+            ohos:height="match_content"
+            ohos:text_size="20fp"
+            ohos:text="Validate form2"/>
+
+    </com.applib.libverify.Form>
+    <!-- /form2 -->
+
+</DependentLayout>

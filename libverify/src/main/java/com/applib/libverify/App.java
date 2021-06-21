@@ -11,7 +11,9 @@ public class App extends AbilityPackage {
 
     @Override
     public void onInitialize() {
+        System.out.println("AMIT : ONINITIALIZE APP 1");
         super.onInitialize();
+        System.out.println("AMIT : ONINITIALIZE APP");
         mContext = new WeakReference<Context>(this);
     }
 

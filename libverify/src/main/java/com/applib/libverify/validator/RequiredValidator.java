@@ -9,7 +9,9 @@ public class RequiredValidator extends AbstractValidator {
 
     public RequiredValidator(boolean required) {
         mRequired = required;
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_field_required);
+        // TODO: Fix string
+        mErrorMessage = "This field is required";
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_field_required);
     }
 
     @Override

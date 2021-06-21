@@ -5,7 +5,9 @@ import com.applib.libverify.ResourceTable;
 
 public abstract class AbstractValidator {
 
-    String mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_field);
+    // TODO: Fix string
+    String mErrorMessage = "The field is not valid";
+//    String mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_field);
 
     public abstract boolean isValid(String value);
 

@@ -17,34 +17,6 @@ import java.util.Map;
 
 public class Form extends DirectionalLayout {
 
-//    private int xx = 0;
-//
-//    private int yy = 0;
-//
-//    private int maxWidth = 0;
-//
-//    private int maxHeight = 0;
-//
-//    private int lastHeight = 0;
-//
-//    // Layout data for the child component identified by the associated index
-//    private final Map<Integer, Layout> axis = new HashMap<>();
-//
-//    private static class Layout {
-//        int positionX = 0;
-//        int positionY = 0;
-//        int width = 0;
-//        int height = 0;
-//    }
-//
-//    private void invalidateValues() {
-//        xx = 0;
-//        yy = 0;
-//        maxWidth = 0;
-//        maxHeight = 0;
-//        axis.clear();
-//    }
-
     static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0x00201, "MY_TAG");
     private static final String TAG = Form.class.toString();
     // activity
@@ -70,7 +42,7 @@ public class Form extends DirectionalLayout {
     }
 
     /**
-     * Check if the form is valid
+     * Check if the Form is valid
      *
      * @return true if it is valid, false either
      */
@@ -80,9 +52,10 @@ public class Form extends DirectionalLayout {
     }
 
     /**
-     * Validate the form by getting and checking all the fields of the form
+     * Validate the Form by getting and checking all the fields of the Form
      */
     private void validate() {
+        System.out.println("AMIT : Form Validate Entry");
         // get the fields
         if(!mInflated) {
             int childCount = getChildCount();
@@ -93,9 +66,10 @@ public class Form extends DirectionalLayout {
 
             if(childCount == 0 && mViewGroupRoot != null)
                 getChildViews(mViewGroupRoot);
-            else
+            else {
+                System.out.println("AMIT : Form getChildViews called through 'this'");
                 getChildViews(this);
-
+            }
             mInflated = true;
         }
 
@@ -109,39 +83,48 @@ public class Form extends DirectionalLayout {
      * @param viewGroup the root view
      */
     private void getChildViews(ComponentContainer viewGroup) {
+        System.out.println("AMIT : Form getChildViews Entry");
+        System.out.println("AMIT : Form CRASH BEFORE?");
         int childCount = viewGroup.getChildCount();
+        System.out.println("AMIT : Form CRASH AFTER? childCount: "+childCount);
         for (int i = 0; i < childCount; i++) {
+            System.out.println("AMIT : Form getChildViews loop "+i);
             Component v = viewGroup.getComponentAt(i);
 
             // only if input validator
-            if(v instanceof InputValidator)
+            if(v instanceof InputValidator) {
+                System.out.println("AMIT : Form getChildViews loop call tiv");
                 mInputValidatorList.add((InputValidator) v);
-                // iterate threw view group children
+            }
+            // iterate threw view group children
             else if(v instanceof ComponentContainer)
                 getChildViews((ComponentContainer) v);
         }
     }
 
     /**
-     * Validate all the fields of the form
+     * Validate all the fields of the Form
      */
     private void validateList() {
+        System.out.println("AMIT : Form validatelist ENTRY list size: "+mInputValidatorList.size());
         mIsValid = true;
-        for(InputValidator inputValidator: mInputValidatorList) {
+        for(InputValidator InputValidator: mInputValidatorList) {
+            System.out.println("AMIT : Form INSIDE LOOP");
             // show error
-            inputValidator.setShowError(mShowErrors);
-            // if validator not valid, the form is not valid either
-            if(!inputValidator.isValid())
+            InputValidator.setShowError(mShowErrors);
+            // if validator not valid, the Form is not valid either
+            if(!InputValidator.isValid())
                 mIsValid = false;
         }
+        System.out.println("AMIT : Form validatelist EXIT");
     }
 
     public void setShowErrors(boolean mShowErrors) {
         this.mShowErrors = mShowErrors;
     }
 
-    public void addInputValidator(InputValidator inputValidator) {
-        mInputValidatorList.add(inputValidator);
+    public void addInputValidator(InputValidator InputValidator) {
+        mInputValidatorList.add(InputValidator);
     }
 
     public void setInputValidatorList(List<InputValidator> mInputValidatorList) {
@@ -164,7 +147,7 @@ public class Form extends DirectionalLayout {
         private Context context;
         private ComponentContainer viewGroup;
         private boolean showErrors = true;
-        private List<InputValidator> inputValidatorList = new ArrayList<>();
+        private List<InputValidator> InputValidatorList = new ArrayList<>();
 
         //TODO: Add activity builder
 //        public Builder(Ability activity) {
@@ -177,6 +160,7 @@ public class Form extends DirectionalLayout {
         }
 
         public Builder(Context context) {
+            System.out.println("AMIT : Form Builder Constructer by Context");
             this.context = context;
         }
 
@@ -192,13 +176,14 @@ public class Form extends DirectionalLayout {
         }
 
         /**
-         * Add an InputValidator to the form
+         * Add an InputValidator to the Form
          *
-         * @param inputValidator the input validator
+         * @param InputValidator the input validator
          * @return the Builder
          */
-        public Builder addInputValidator(InputValidator inputValidator) {
-            this.inputValidatorList.add(inputValidator);
+        public Builder addInputValidator(InputValidator InputValidator) {
+            System.out.println("AMIT : Added a InputValidator");
+            this.InputValidatorList.add(InputValidator);
             return this;
         }
 
@@ -219,93 +204,24 @@ public class Form extends DirectionalLayout {
      * @return a Form object
      */
     public static Form newInstance(Builder builder) {
-        Form form;
+        System.out.println("AMIT : Form Builder NewInstance");
+        Form Form;
         if(builder.activity != null) {
-            form = new Form(builder.activity);
-            form.setActivity(builder.activity);
+            Form = new Form(builder.activity);
+            Form.setActivity(builder.activity);
         }
         else if(builder.viewGroup != null) {
-            form = new Form(builder.context);
-            form.setViewGroupRoot(builder.viewGroup);
+            Form = new Form(builder.context);
+            Form.setViewGroupRoot(builder.viewGroup);
         }
         else {
-            form = new Form(builder.context);
+            System.out.println("AMIT : NewInstance set context");
+            Form = new Form(builder.context);
         }
-        form.setShowErrors(builder.showErrors);
-        form.setInputValidatorList(builder.inputValidatorList);
-        return form;
+        Form.setShowErrors(builder.showErrors);
+        Form.setInputValidatorList(builder.InputValidatorList);
+        System.out.println("AMIT : Form Builder NewInstance LEAVE");
+        return Form;
     }
-//
-//
-//    private void addChild(Component component, int id, int layoutWidth) {
-//        Layout layout = new Layout();
-//        layout.positionX = xx + component.getMarginLeft();
-//        layout.positionY = yy + component.getMarginTop();
-//        layout.width = component.getEstimatedWidth();
-//        layout.height = component.getEstimatedHeight();
-//        if ((xx + layout.width) > layoutWidth) {
-//            xx = 0;
-//            yy += lastHeight;
-//            lastHeight = 0;
-//            layout.positionX = xx + component.getMarginLeft();
-//            layout.positionY = yy + component.getMarginTop();
-//        }
-//        axis.put(id, layout);
-//        lastHeight = Math.max(lastHeight, layout.height + component.getMarginBottom());
-//        xx += layout.width + component.getMarginRight();
-//        maxWidth = Math.max(maxWidth, layout.positionX + layout.width);
-//        maxHeight = Math.max(maxHeight, layout.positionY + layout.height);
-//    }
-//
-//    @Override
-//    public boolean onEstimateSize(int widthEstimatedConfig, int heightEstimatedConfig) {
-//
-//        // Notify child components in the container component to perform measurement.
-//        measureChildren(widthEstimatedConfig, heightEstimatedConfig);
-//        int width = Component.EstimateSpec.getSize(widthEstimatedConfig);
-//
-//        // Associate the index of the child component with its layout data.
-//        for (int idx = 0; idx < getChildCount(); idx++) {
-//            Component childView = getComponentAt(idx);
-//            addChild(childView, idx, width);
-//        }
-//
-//        setEstimatedSize(
-//                Component.EstimateSpec.getChildSizeWithMode(maxWidth, widthEstimatedConfig, 0),
-//                Component.EstimateSpec.getChildSizeWithMode(maxHeight, heightEstimatedConfig, 0));
-//        return true;
-//    }
-//
-//    private void measureChildren(int widthEstimatedConfig, int heightEstimatedConfig) {
-//        for (int idx = 0; idx < getChildCount(); idx++) {
-//            Component childView = getComponentAt(idx);
-//            if (childView != null) {
-//                measureChild(childView, widthEstimatedConfig, heightEstimatedConfig);
-//            }
-//        }
-//    }
-//
-//    private void measureChild(Component child, int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
-//        ComponentContainer.LayoutConfig lc = child.getLayoutConfig();
-//        int childWidthMeasureSpec = EstimateSpec.getChildSizeWithMode(
-//                lc.width, parentWidthMeasureSpec, EstimateSpec.UNCONSTRAINT);
-//        int childHeightMeasureSpec = EstimateSpec.getChildSizeWithMode(
-//                lc.height, parentHeightMeasureSpec, EstimateSpec.UNCONSTRAINT);
-//        child.estimateSize(childWidthMeasureSpec, childHeightMeasureSpec);
-//    }
-//
-//    @Override
-//    public boolean onArrange(int left, int top, int width, int height) {
-//
-//        // Arrange child components.
-//        for (int idx = 0; idx < getChildCount(); idx++) {
-//            Component childView = getComponentAt(idx);
-//            Layout layout = axis.get(idx);
-//            if (layout != null) {
-//                childView.arrange(layout.positionX, layout.positionY, layout.width, layout.height);
-//            }
-//        }
-//        HiLog.debug(LABEL,"REACHED HERE");
-//        return true;
-//    }
+
 }

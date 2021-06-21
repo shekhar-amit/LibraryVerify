@@ -12,10 +12,10 @@
       "releaseType": "Release"
     }
   },
-  "deviceConfig": {
-  },
+  "deviceConfig": {},
   "module": {
     "package": "com.applib.libverify",
+    "name": ".App",
     "deviceType": [
       "phone"
     ],

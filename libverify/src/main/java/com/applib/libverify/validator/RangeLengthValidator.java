@@ -17,7 +17,9 @@ public class RangeLengthValidator extends AbstractValidator {
 
         mMaxLength = maxLength;
         mMinLength = minLength;
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_length, mMinLength, mMaxLength);
+        // TODO: Fix string
+        mErrorMessage = "This field must contain between "+mMinLength+" and "+mMaxLength+" characters";
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_length, mMinLength, mMaxLength);
     }
 
     @Override

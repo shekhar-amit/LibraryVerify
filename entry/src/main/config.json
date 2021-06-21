@@ -43,6 +43,33 @@
         "label": "$string:app_name",
         "type": "page",
         "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "com.applib.libraryverify.JavaFormAbility",
+        "icon": "$media:icon",
+        "description": "$string:javaformability_description",
+        "label": "$string:app_name",
+        "type": "page",
+        "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "com.applib.libraryverify.OneFormAbility",
+        "icon": "$media:icon",
+        "description": "$string:oneformability_description",
+        "label": "$string:app_name",
+        "type": "page",
+        "launchType": "standard"
+      },
+      {
+        "orientation": "unspecified",
+        "name": "com.applib.libraryverify.TwoFormAbility",
+        "icon": "$media:icon",
+        "description": "$string:twoformability_description",
+        "label": "$string:app_name",
+        "type": "page",
+        "launchType": "standard"
       }
     ]
   }

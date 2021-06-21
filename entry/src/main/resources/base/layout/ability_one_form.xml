@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectionalLayout
+    xmlns:ohos="http://schemas.huawei.com/res/ohos"
+    xmlns:app="http://schemas.huawei.com/hap/res-auto"
+    ohos:height="match_parent"
+    ohos:width="match_parent"
+    ohos:orientation="vertical">
+
+    <NestedScrollView
+        ohos:width="match_content"
+        ohos:height="match_content">
+
+        <!-- form -->
+        <DirectionalLayout
+            ohos:id="$+id:form"
+            ohos:orientation="vertical"
+            ohos:width="match_parent"
+            ohos:height="match_parent"
+            ohos:padding="16fp">
+
+            <!-- custom required message -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:requiredMessage="Please enter a value">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_size="20fp"
+                    ohos:hint="Custom required message *"/>
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- email -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_size="20fp"
+                    ohos:hint="Email"/>
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- phone number -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:required="true">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_input_type="pattern_number"
+                    ohos:text_size="20fp"
+                    ohos:hint="Phone number *"/>
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- number -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_input_type="pattern_number"
+                    ohos:text_size="20fp"
+                    ohos:hint="Number"/>
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- regex -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:regex="^[0-9]{4}$"
+                app:errorMessage="4 digits only">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_size="20fp"
+                    ohos:hint="Regex 4 digits (custom error msg)"/>
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- password -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:required="true">
+
+                <TextField
+                    ohos:id="$+id:password1"
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_input_type="pattern_password"
+                    ohos:text_size="20fp"
+                    ohos:hint="Password *" />
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- confirm password -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:required="true"
+                app:identicalAs="$+id:password1">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_input_type="pattern_password"
+                    ohos:text_size="20fp"
+                    ohos:hint="Confirm password *"/>
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- 6 characters min -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:minLength="6">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_size="20fp"
+                    ohos:hint="At least 6 characters long" />
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- between 2 and 8 characters -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:minLength="2"
+                app:maxLength="8">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_size="20fp"
+                    ohos:hint="Between 2 and 8 characters" />
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- between 15 and 50 -->
+            <com.applib.libverify.InputValidator
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:minValue="15"
+                app:maxValue="50">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_input_type="pattern_number"
+                    ohos:text_size="20fp"
+                    ohos:hint="Between 15 and 50 (value)" />
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- between 15 and 50 -->
+            <com.applib.libverify.InputValidator
+                ohos:id="$+id:custom_validator"
+                ohos:width="match_content"
+                ohos:height="match_content"
+                app:required="true">
+
+                <TextField
+                    ohos:width="match_parent"
+                    ohos:height="match_content"
+                    ohos:text_size="20fp"
+                    ohos:hint="Custom validator (== 'ok man') *" />
+
+            </com.applib.libverify.InputValidator>
+
+            <!-- submit button -->
+            <Button
+                ohos:id="$+id:validate_one_form"
+                ohos:width="match_content"
+                ohos:height="match_content"
+                ohos:text_size="20fp"
+                ohos:text="validate"/>
+
+        </DirectionalLayout>
+        <!-- /form -->
+
+    </NestedScrollView>
+
+</DirectionalLayout>

@@ -9,18 +9,23 @@ public class MinValueValidator extends AbstractValidator {
 
     public MinValueValidator(int value) {
         mMinValue = value;
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_value, mMinValue);
+        // TODO: Fix string
+        mErrorMessage = "The email is not valid";
+        mErrorMessage = "This field must be greater than "+mMinValue;
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_value, mMinValue);
     }
 
     @Override
     public boolean isValid(String value) {
         try {
             double d = Double.parseDouble(value);
-            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_value, mMinValue);
+            mErrorMessage = "This field must be greater than "+mMinValue;
+//            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_value, mMinValue);
             return d >= mMinValue;
         }
         catch(NumberFormatException nfe) {
-            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_value);
+            mErrorMessage = "This field must be greater than "+mMinValue;
+//            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_value);
             return false;
         }
     }

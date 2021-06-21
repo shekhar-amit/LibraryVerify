@@ -11,7 +11,9 @@ public class MinLengthValidator extends AbstractValidator {
         if(length < 0)
             throw new IllegalArgumentException("You put a negative min length (" + length +")");
         mLength = length;
-        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_length, mLength);
+        // TODO: Fix string
+        mErrorMessage = "This field can contain " + mLength +" characters maximum";
+//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_length, mLength);
     }
 
     @Override
