@@ -3,7 +3,8 @@
     xmlns:ohos="http://schemas.huawei.com/res/ohos"
     ohos:height="match_parent"
     ohos:width="match_parent"
-    ohos:orientation="vertical">
+    ohos:orientation="vertical"
+    ohos:padding="15fp">
 
     <Button
         ohos:id="$+id:btn_java_form"

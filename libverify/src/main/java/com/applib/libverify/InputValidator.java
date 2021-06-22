@@ -65,7 +65,6 @@ public class InputValidator extends DependentLayout {
 
     private void init(AttrSet attrs) {
         // attributes
-        // TODO: Fix Custom Attributes
         if (attrs != null) {
             System.out.println("AMIT : INIT ENTERING");
             this.mRequired = attrs.getAttr("required").isPresent() ? attrs.getAttr(
@@ -94,7 +93,6 @@ public class InputValidator extends DependentLayout {
         System.out.println("AMIT : INIT LEAVING");
     }
 
-    //TODO: onLayout
 
     /**
      * Build the validator according to the attributes
@@ -127,6 +125,19 @@ public class InputValidator extends DependentLayout {
         // custom messages
         if(mErrorMessage != null) mValidator.setmErrorMessage(mErrorMessage);
         if(mRequiredMessage != null) mRequiredValidator.setmErrorMessage(mRequiredMessage);
+
+        if(mEditText==null) {
+            // get edit text
+            int childCount = getChildCount();
+            // only one edit text per input validator
+            if(childCount == 0 || childCount > 1)
+                try {
+                    throw new Exception("InputValidator must contain only one EditText");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            mEditText = (TextField) getComponentAt(0);
+        }
 
         // mBuilt
         mBuilt = true;
@@ -186,8 +197,9 @@ public class InputValidator extends DependentLayout {
         System.out.println("AMIT : TIV isValid 1");
         if(!mBuilt)
             buildValidator();
-        if(mEditText==null)
+        if(mEditText==null){
             System.out.println("AMIT : TIV isValid 2 ");
+        }
         else
             System.out.println("AMIT : TIV isValid 2A ");
         String value = mEditText.getText();

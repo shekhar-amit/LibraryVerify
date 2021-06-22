@@ -8,6 +8,7 @@ import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.Button;
 import ohos.agp.components.Component;
+import ohos.agp.components.DirectionalLayout;
 import ohos.agp.window.dialog.ToastDialog;
 
 public class OneFormAbilitySlice extends AbilitySlice {
@@ -35,7 +36,9 @@ public class OneFormAbilitySlice extends AbilitySlice {
             }
         });
 
-        mForm = new Form.Builder(this)
+        DirectionalLayout mViewForm = (DirectionalLayout) findComponentById(ResourceTable.Id_form);
+
+        mForm = new Form.Builder(this, mViewForm)
                 .showErrors(true)
                 .build();
 

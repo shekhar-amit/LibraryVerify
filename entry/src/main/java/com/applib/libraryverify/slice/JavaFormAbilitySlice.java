@@ -12,7 +12,6 @@ import ohos.agp.window.dialog.ToastDialog;
 
 public class JavaFormAbilitySlice extends AbilitySlice {
 
-    //TODO: Not working
     Button mValidate;
     TextField mEmail, mPassword, mConfirmPassword;
     Form mForm;

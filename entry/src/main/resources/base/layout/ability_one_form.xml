@@ -35,7 +35,8 @@
             <!-- email -->
             <com.applib.libverify.InputValidator
                 ohos:width="match_content"
-                ohos:height="match_content">
+                ohos:height="match_content"
+                app:validator="isEmail">
 
                 <TextField
                     ohos:width="match_parent"
@@ -49,7 +50,9 @@
             <com.applib.libverify.InputValidator
                 ohos:width="match_content"
                 ohos:height="match_content"
-                app:required="true">
+                app:inputType="phone"
+                app:required="true"
+                app:validator="isPhoneNumber">
 
                 <TextField
                     ohos:width="match_parent"
@@ -186,8 +189,8 @@
                 ohos:id="$+id:validate_one_form"
                 ohos:width="match_content"
                 ohos:height="match_content"
-                ohos:text_size="20fp"
-                ohos:text="validate"/>
+                ohos:text_size="25fp"
+                ohos:text="Validate"/>
 
         </DirectionalLayout>
         <!-- /form -->
