@@ -28,5 +28,5 @@ public class IdenticalValidator extends AbstractValidator {
     }
 
     @Override
-    public String getmErrorMessage() { return  mErrorMessage; }
+    public String getErrorMessage() { return  mErrorMessage; }
 }

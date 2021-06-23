@@ -26,11 +26,11 @@ public class RequiredValidator extends AbstractValidator {
     }
 
     @Override
-    public String getmErrorMessage() {
+    public String getErrorMessage() {
         return mErrorMessage;
     }
 
-    public void setmErrorMessage(String message) {
+    public void setErrorMessage(String message) {
         mRequired = true;
         mErrorMessage = message;
     }

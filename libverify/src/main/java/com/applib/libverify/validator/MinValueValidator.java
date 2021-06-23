@@ -31,7 +31,7 @@ public class MinValueValidator extends AbstractValidator {
     }
 
     @Override
-    public String getmErrorMessage() {
+    public String getErrorMessage() {
         return mErrorMessage;
     }
 }

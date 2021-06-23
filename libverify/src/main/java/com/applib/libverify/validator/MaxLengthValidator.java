@@ -24,7 +24,7 @@ public class MaxLengthValidator extends AbstractValidator {
     }
 
     @Override
-    public String getmErrorMessage() {
+    public String getErrorMessage() {
         return mErrorMessage;
     }
 }

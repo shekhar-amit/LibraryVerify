@@ -50,7 +50,6 @@
             <com.applib.libverify.InputValidator
                 ohos:width="match_content"
                 ohos:height="match_content"
-                app:inputType="phone"
                 app:required="true"
                 app:validator="isPhoneNumber">
 

@@ -31,7 +31,7 @@ public class OneFormAbilitySlice extends AbilitySlice {
             }
 
             @Override
-            public String getmErrorMessage() {
+            public String getErrorMessage() {
                 return "This field must be equals to 'ok man'";
             }
         });

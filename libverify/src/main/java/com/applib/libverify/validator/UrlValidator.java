@@ -19,7 +19,7 @@ public class UrlValidator extends AbstractValidator {
     }
 
     @Override
-    public String getmErrorMessage() {
+    public String getErrorMessage() {
         return mErrorMessage;
     }
 }

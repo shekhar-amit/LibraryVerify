@@ -6,20 +6,13 @@ import ohos.agp.components.Component;
 import ohos.agp.components.ComponentContainer;
 import ohos.agp.components.DirectionalLayout;
 import ohos.app.Context;
-import ohos.hiviewdfx.HiLog;
-import ohos.hiviewdfx.HiLogLabel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class Form extends DirectionalLayout {
 
-    static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0x00201, "MY_TAG");
-    private static final String TAG = Form.class.toString();
-    // activity
     private Ability mActivity;
     private ComponentContainer mViewGroupRoot;
     // show errors
@@ -55,19 +48,13 @@ public class Form extends DirectionalLayout {
      * Validate the Form by getting and checking all the fields of the Form
      */
     private void validate() {
-        System.out.println("AMIT : Form Validate Entry");
         // get the fields
         if(!mInflated) {
             int childCount = getChildCount();
 
-            // TODO: Add the activity root view validation
-//            if(childCount == 0 && mActivity != null)
-//                getChildViews(((ViewGroup) mActivity.getWindow().getDecorView().findViewById(android.R.id.content)));
-
             if(childCount == 0 && mViewGroupRoot != null)
                 getChildViews(mViewGroupRoot);
             else {
-                System.out.println("AMIT : Form getChildViews called through 'this'");
                 getChildViews(this);
             }
             mInflated = true;
@@ -83,17 +70,12 @@ public class Form extends DirectionalLayout {
      * @param viewGroup the root view
      */
     private void getChildViews(ComponentContainer viewGroup) {
-        System.out.println("AMIT : Form getChildViews Entry");
-        System.out.println("AMIT : Form CRASH BEFORE?");
         int childCount = viewGroup.getChildCount();
-        System.out.println("AMIT : Form CRASH AFTER? childCount: "+childCount);
         for (int i = 0; i < childCount; i++) {
-            System.out.println("AMIT : Form getChildViews loop "+i);
             Component v = viewGroup.getComponentAt(i);
 
             // only if input validator
             if(v instanceof InputValidator) {
-                System.out.println("AMIT : Form getChildViews loop call tiv");
                 mInputValidatorList.add((InputValidator) v);
             }
             // iterate threw view group children
@@ -106,17 +88,14 @@ public class Form extends DirectionalLayout {
      * Validate all the fields of the Form
      */
     private void validateList() {
-        System.out.println("AMIT : Form validatelist ENTRY list size: "+mInputValidatorList.size());
         mIsValid = true;
         for(InputValidator InputValidator: mInputValidatorList) {
-            System.out.println("AMIT : Form INSIDE LOOP");
             // show error
             InputValidator.setShowError(mShowErrors);
             // if validator not valid, the Form is not valid either
             if(!InputValidator.isValid())
                 mIsValid = false;
         }
-        System.out.println("AMIT : Form validatelist EXIT");
     }
 
     public void setShowErrors(boolean mShowErrors) {
@@ -149,18 +128,12 @@ public class Form extends DirectionalLayout {
         private boolean showErrors = true;
         private List<InputValidator> InputValidatorList = new ArrayList<>();
 
-        //TODO: Add activity builder
-//        public Builder(Ability activity) {
-//            this.activity = activity;
-//        }
-
         public Builder(Context context, Component rootView) {
             this.context = context;
             this.viewGroup = (ComponentContainer) rootView;
         }
 
         public Builder(Context context) {
-            System.out.println("AMIT : Form Builder Constructer by Context");
             this.context = context;
         }
 
@@ -182,7 +155,6 @@ public class Form extends DirectionalLayout {
          * @return the Builder
          */
         public Builder addInputValidator(InputValidator InputValidator) {
-            System.out.println("AMIT : Added a InputValidator");
             this.InputValidatorList.add(InputValidator);
             return this;
         }
@@ -204,7 +176,6 @@ public class Form extends DirectionalLayout {
      * @return a Form object
      */
     public static Form newInstance(Builder builder) {
-        System.out.println("AMIT : Form Builder NewInstance");
         Form Form;
         if(builder.activity != null) {
             Form = new Form(builder.activity);
@@ -215,12 +186,10 @@ public class Form extends DirectionalLayout {
             Form.setViewGroupRoot(builder.viewGroup);
         }
         else {
-            System.out.println("AMIT : NewInstance set context");
             Form = new Form(builder.context);
         }
         Form.setShowErrors(builder.showErrors);
         Form.setInputValidatorList(builder.InputValidatorList);
-        System.out.println("AMIT : Form Builder NewInstance LEAVE");
         return Form;
     }
 

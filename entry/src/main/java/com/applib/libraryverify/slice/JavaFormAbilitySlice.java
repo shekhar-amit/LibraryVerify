@@ -53,7 +53,6 @@ public class JavaFormAbilitySlice extends AbilitySlice {
             @Override
             public void onClick(Component component) {
                 showToast(mForm.isValid() ? "This form is valid" : "This form is not valid");
-                System.out.println("AMIT : CLICKED BUTTON");
             }
         });
 

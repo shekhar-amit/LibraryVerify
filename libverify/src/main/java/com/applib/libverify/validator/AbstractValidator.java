@@ -11,8 +11,8 @@ public abstract class AbstractValidator {
 
     public abstract boolean isValid(String value);
 
-    public abstract String getmErrorMessage();
+    public abstract String getErrorMessage();
 
-    public void setmErrorMessage(String message) { mErrorMessage = message; }
+    public void setErrorMessage(String message) { mErrorMessage = message; }
 
 }

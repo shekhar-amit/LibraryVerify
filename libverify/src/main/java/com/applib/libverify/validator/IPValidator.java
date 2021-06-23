@@ -18,7 +18,7 @@ public class IPValidator extends AbstractValidator {
     }
 
     @Override
-    public String getmErrorMessage() {
+    public String getErrorMessage() {
         return mErrorMessage;
     }
 }

@@ -19,7 +19,7 @@ public class PhoneNumberValidator extends AbstractValidator {
 
 
     @Override
-    public String getmErrorMessage() {
+    public String getErrorMessage() {
         return mErrorMessage;
     }
 }

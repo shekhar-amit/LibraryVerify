@@ -18,7 +18,7 @@ public class InputValidator extends DependentLayout {
     // const
     public static final int IS_EMAIL = 0, IS_PHONE_NUMBER = 1, IS_NUMERIC = 2, IS_URL = 3, IS_IP = 4;
     private static final int NONE = -1;
-        // validator
+    // validator
     private AbstractValidator mValidator = new ValidateValidator();
     private RequiredValidator mRequiredValidator;
     // errorss
@@ -45,7 +45,6 @@ public class InputValidator extends DependentLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("AMIT : CONSTRUCTOR");
     }
 
     public InputValidator(Context context, AttrSet attrs) {
@@ -56,15 +55,11 @@ public class InputValidator extends DependentLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("AMIT : CONSTRUCTOR2");
-        System.out.println("AMIT : REQUIRED MESSAGE "+this.mRequiredMessage);
-        System.out.println("AMIT : REQUIRED"+this.mRequired);
     }
 
     private void init(AttrSet attrs) {
         // attributes
         if (attrs != null) {
-            System.out.println("AMIT : INIT ENTERING");
             this.mRequired = attrs.getAttr("required").isPresent() ? attrs.getAttr(
                     "required").get().getBoolValue() : false;
             this.mValidatorNumber = attrs.getAttr("validator").isPresent() ? attrs.getAttr(
@@ -81,14 +76,11 @@ public class InputValidator extends DependentLayout {
                     "regex").get().getStringValue() : null;
             this.mOtherEditTextId = attrs.getAttr("identicalAs").isPresent() ? attrs.getAttr(
                     "identicalAs").get().getIntegerValue() : NONE;
-            this.mRegex = attrs.getAttr("regex").isPresent() ? attrs.getAttr(
-                    "regex").get().getStringValue() : null;
             this.mErrorMessage = attrs.getAttr("errorMessage").isPresent() ? attrs.getAttr(
                     "errorMessage").get().getStringValue() : null;
             this.mRequiredMessage = attrs.getAttr("requiredMessage").isPresent() ? attrs.getAttr(
                     "requiredMessage").get().getStringValue() : null;
         }
-        System.out.println("AMIT : INIT LEAVING");
     }
 
 
@@ -96,7 +88,6 @@ public class InputValidator extends DependentLayout {
      * Build the validator according to the attributes
      */
     private void buildValidator() {
-        System.out.println("AMIT : BUILD ENTERING");
 
         // get views
         getOtherEditText();
@@ -121,8 +112,8 @@ public class InputValidator extends DependentLayout {
         if(mRegex != null) mValidator = new RegexValidator(mRegex);
 
         // custom messages
-        if(mErrorMessage != null) mValidator.setmErrorMessage(mErrorMessage);
-        if(mRequiredMessage != null) mRequiredValidator.setmErrorMessage(mRequiredMessage);
+        if(mErrorMessage != null) mValidator.setErrorMessage(mErrorMessage);
+        if(mRequiredMessage != null) mRequiredValidator.setErrorMessage(mRequiredMessage);
 
         if(mEditText==null) {
             // get edit text
@@ -190,54 +181,35 @@ public class InputValidator extends DependentLayout {
      * @return true of it is valid, false either
      */
     public boolean isValid() {
-        System.out.println("AMIT : TIV isValid ENTRY");
         // build validator
-        System.out.println("AMIT : TIV isValid 1");
         if(!mBuilt)
             buildValidator();
-        if(mEditText==null){
-            System.out.println("AMIT : TIV isValid 2 ");
-        }
-        else
-            System.out.println("AMIT : TIV isValid 2A ");
         String value = mEditText.getText();
-        System.out.println("AMIT : TIV isValid 3");
 
         // reset error
         mEditText.setHintColor(Color.GRAY);
-//        mEditText.setError(null);
 
         // test requirement
         if(!mRequiredValidator.isValid(value)) {
             if(mShowError){
-                mEditText.setHint(mRequiredValidator.getmErrorMessage());
+                mEditText.setHint(mRequiredValidator.getErrorMessage());
                 mEditText.setHintColor(Color.RED);
             }
-//            if(mShowError) mEditText.setError(mRequiredValidator.getErrorMessage());
-            System.out.println("AMIT : TIV isValid EXIT");
             return false;
         }
-        System.out.println("AMIT : TIV isValid 4");
 
         // test validity
         if(value!=null && !value.isEmpty() && !mValidator.isValid(value)) {
             if(mShowError) {
-                mEditText.setHint(mValidator.getmErrorMessage());
+                mEditText.setHint(mValidator.getErrorMessage());
                 mEditText.setHintColor(Color.RED);
                 if(mValidator instanceof IdenticalValidator){
-                    mOtherEditText.setHint(mValidator.getmErrorMessage());
+                    mOtherEditText.setHint(mValidator.getErrorMessage());
                     mOtherEditText.setHintColor(Color.RED);
                 }
             }
-//            if(mShowError) {
-//                mEditText.setError(mValidator.getErrorMessage());
-//                if(mValidator instanceof IdenticalValidator)
-//                    mOtherEditText.setError(mValidator.getErrorMessage());
-//            }
-            System.out.println("AMIT : TIV isValid EXIT");
             return false;
         }
-        System.out.println("AMIT : TIV isValid EXIT");
         return true;
     }
 
@@ -294,9 +266,7 @@ public class InputValidator extends DependentLayout {
     }
 
     public void setRequiredMessage(String mRequiredMessage) {
-        System.out.println("AMIT : OLD REQUIRED MESSAGE "+this.mRequiredMessage);
         this.mRequiredMessage = mRequiredMessage;
-        System.out.println("AMIT : NEW REQUIRED MESSAGE "+this.mRequiredMessage);
     }
 
     /**
