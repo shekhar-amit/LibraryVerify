@@ -1,11 +1,11 @@
 
-# LibraryVerify
+# LibVerify
 
 HMOS library designed for rapid and customizable form validation.
 
 ## Usage
 
-You can use **LibraryVerify** with any `Component` that extends the original [`TextField`].
+You can use **LibVerify** with any `Component` that extends the original [`TextField`].
 
 ### With XML
 
@@ -40,6 +40,9 @@ You just have to wrap your `EditText` with an `InputValidator` view. Example for
 
 </com.applib.libverify.InputValidator>            
 ```
+
+Note: Be sure to add `xmlns:app="http://schemas.huawei.com/hap/res-auto"` next to `xmlns:ohos` for custom attributes to work.
+
 `InputValidator` can be set to recognize email, phone, IP address, URL or number using `validator` attribute.
 <br>If you don't specify an `errorMessage` or a `requiredMessage`, predefined messages will be shown if the field is not valid.
 
