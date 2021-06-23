@@ -6,13 +6,9 @@ import ohos.agp.components.DependentLayout;
 import ohos.agp.components.TextField;
 import ohos.agp.utils.Color;
 import ohos.app.Context;
-import ohos.hiviewdfx.HiLog;
-import ohos.hiviewdfx.HiLogLabel;
 
 public class InputValidator extends DependentLayout {
 
-    static final HiLogLabel LABEL = new HiLogLabel(HiLog.LOG_APP, 0x00201, "MY_TAG");
-    private static final String TAG = InputValidator.class.toString();
     // context
     private Context mContext;
     // const
@@ -21,7 +17,7 @@ public class InputValidator extends DependentLayout {
     // validator
     private AbstractValidator mValidator = new ValidateValidator();
     private RequiredValidator mRequiredValidator;
-    // errorss
+    // errors
     private boolean mShowError = true;
     // edit text
     private TextField mEditText;

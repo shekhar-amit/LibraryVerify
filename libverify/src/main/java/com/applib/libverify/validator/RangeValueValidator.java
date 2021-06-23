@@ -1,8 +1,5 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.App;
-import com.applib.libverify.ResourceTable;
-
 public class RangeValueValidator extends AbstractValidator {
 
     private int mMinValue, mMaxValue;
@@ -13,9 +10,7 @@ public class RangeValueValidator extends AbstractValidator {
 
         mMinValue = minValue;
         mMaxValue = maxValue;
-        // TODO: Fix string
         mErrorMessage = "This field must be between "+mMinValue+" and "+mMinValue;
-//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_value, mMinValue, mMaxValue);
     }
 
     @Override
@@ -23,12 +18,10 @@ public class RangeValueValidator extends AbstractValidator {
         try {
             double d = Double.parseDouble(value);
             mErrorMessage = "This field must be between "+mMinValue+" and "+mMinValue;
-//            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_value, mMinValue, mMaxValue);
             return d >= mMinValue && d <= mMaxValue;
         }
         catch(NumberFormatException nfe) {
             mErrorMessage = "This field must be between "+mMinValue+" and "+mMinValue;
-//            mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_number);
             return false;
         }
     }

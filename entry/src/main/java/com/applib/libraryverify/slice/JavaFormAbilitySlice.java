@@ -49,12 +49,8 @@ public class JavaFormAbilitySlice extends AbilitySlice {
                 .build();
 
 
-        mValidate.setClickedListener(new Component.ClickedListener() {
-            @Override
-            public void onClick(Component component) {
-                showToast(mForm.isValid() ? "This form is valid" : "This form is not valid");
-            }
-        });
+        mValidate.setClickedListener(component ->
+                showToast(mForm.isValid() ? "This form is valid" : "This form is not valid"));
 
 
     }

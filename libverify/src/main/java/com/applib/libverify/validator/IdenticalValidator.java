@@ -1,7 +1,5 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.App;
-import com.applib.libverify.ResourceTable;
 import ohos.agp.components.TextField;
 
 
@@ -11,9 +9,7 @@ public class IdenticalValidator extends AbstractValidator {
 
     public IdenticalValidator(TextField textField) {
         mOtherTextField = textField;
-        // TODO: Fix string
         mErrorMessage = "The two fields mismatch";
-//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_fields_mismatch);
     }
 
     @Override

@@ -1,17 +1,12 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.App;
-import com.applib.libverify.ResourceTable;
-
 public class RequiredValidator extends AbstractValidator {
 
     private boolean mRequired;
 
     public RequiredValidator(boolean required) {
         mRequired = required;
-        // TODO: Fix string
         mErrorMessage = "This field is required";
-//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_field_required);
     }
 
     @Override

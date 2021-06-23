@@ -6,7 +6,6 @@ import com.applib.libverify.InputValidator;
 import ohos.aafwk.ability.AbilitySlice;
 import ohos.aafwk.content.Intent;
 import ohos.agp.components.Button;
-import ohos.agp.components.Component;
 import ohos.agp.window.dialog.ToastDialog;
 
 public class TwoFormAbilitySlice extends AbilitySlice {
@@ -30,19 +29,11 @@ public class TwoFormAbilitySlice extends AbilitySlice {
         mValidateForm1 = (Button) findComponentById(ResourceTable.Id_validate_form1);
         mValidateForm2 = (Button) findComponentById(ResourceTable.Id_validate_form2);
 
-        mValidateForm1.setClickedListener(new Component.ClickedListener() {
-            @Override
-            public void onClick(Component component) {
-                showToast(mForm1.isValid() ? "Form 1 is valid" : "Form 1 is not valid");
-            }
-        });
+        mValidateForm1.setClickedListener(component ->
+                showToast(mForm1.isValid() ? "Form 1 is valid" : "Form 1 is not valid"));
 
-        mValidateForm2.setClickedListener(new Component.ClickedListener() {
-            @Override
-            public void onClick(Component component) {
-                showToast(mForm2.isValid() ? "Form 2 is valid" : "Form 2 is not valid");
-            }
-        });
+        mValidateForm2.setClickedListener(component ->
+                showToast(mForm2.isValid() ? "Form 2 is valid" : "Form 2 is not valid"));
     }
 
     private void showToast(String msg){

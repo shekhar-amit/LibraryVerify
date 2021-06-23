@@ -1,17 +1,12 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.App;
-import com.applib.libverify.ResourceTable;
-
 public class MaxValueValidator extends AbstractValidator {
 
     private int mMaxValue;
 
     public MaxValueValidator(int value) {
         mMaxValue = value;
-        // TODO: Fix string
         mErrorMessage = "This field must be less than "+mMaxValue;
-//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_max_value, mMaxValue);
     }
 
     @Override

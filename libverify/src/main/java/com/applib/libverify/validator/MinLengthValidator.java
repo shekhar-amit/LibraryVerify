@@ -1,7 +1,5 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.App;
-import com.applib.libverify.ResourceTable;
 
 public class MinLengthValidator extends AbstractValidator {
 
@@ -11,9 +9,7 @@ public class MinLengthValidator extends AbstractValidator {
         if(length < 0)
             throw new IllegalArgumentException("You put a negative min length (" + length +")");
         mLength = length;
-        // TODO: Fix string
         mErrorMessage = "This field can contain " + mLength +" characters maximum";
-//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_min_length, mLength);
     }
 
     @Override

@@ -1,8 +1,5 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.App;
-import com.applib.libverify.ResourceTable;
-
 import java.util.regex.Pattern;
 
 public class RegexValidator extends AbstractValidator {
@@ -11,9 +8,7 @@ public class RegexValidator extends AbstractValidator {
 
     public RegexValidator(String regex) {
         mRegexPattern = Pattern.compile(regex);
-        // TODO: Fix string
         mErrorMessage = "This field is not valid";
-//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_invalid_field);
     }
 
     @Override

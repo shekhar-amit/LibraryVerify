@@ -1,8 +1,5 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.App;
-import com.applib.libverify.ResourceTable;
-
 public class RangeLengthValidator extends AbstractValidator {
 
     private int mMaxLength, mMinLength;
@@ -17,9 +14,7 @@ public class RangeLengthValidator extends AbstractValidator {
 
         mMaxLength = maxLength;
         mMinLength = minLength;
-        // TODO: Fix string
         mErrorMessage = "This field must contain between "+mMinLength+" and "+mMaxLength+" characters";
-//        mErrorMessage = App.getmContext().getString(ResourceTable.String_error_range_length, mMinLength, mMaxLength);
     }
 
     @Override
