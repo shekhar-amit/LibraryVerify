@@ -1,4 +1,5 @@
 
+  
 # LibVerify
 
 HMOS library designed for rapid and customizable form validation.
@@ -9,7 +10,7 @@ You can use **LibVerify** with any `Component` that extends the original [`TextF
 
 ### With XML
 
-You just have to wrap your `EditText` with an `InputValidator` view. Example for an email and a custom regex :
+You just have to wrap your `TextField` with an `InputValidator` view. Example for an email and a custom regex :
 
 ```xml
 <com.applib.libverify.InputValidator
@@ -41,7 +42,7 @@ You just have to wrap your `EditText` with an `InputValidator` view. Example for
 </com.applib.libverify.InputValidator>            
 ```
 
-Note: Be sure to add `xmlns:app="http://schemas.huawei.com/hap/res-auto"` next to `xmlns:ohos` for custom attributes to work.
+**Note:** Be sure to add `xmlns:app="http://schemas.huawei.com/hap/res-auto"` next to `xmlns:ohos` for custom attributes to work.
 
 `InputValidator` can be set to recognize email, phone, IP address, URL or number using `validator` attribute.
 <br>If you don't specify an `errorMessage` or a `requiredMessage`, predefined messages will be shown if the field is not valid.
@@ -120,7 +121,7 @@ All the attributes that can be used with `Form`. They can be used in XML or in J
 
 Attribute | Type | Default | Description
 --- | --- | --- | ---
-`app:showErrors` | `boolean` | `true` | Whether the errors must be shown on each EditText or not
+`app:showErrors` | `boolean` | `true` | Whether the errors must be shown on each TextField or not
 
 
 ## Advanced Usage
@@ -348,4 +349,3 @@ A sample app with some use cases of the library is available on this [link](http
 ## Credits
 
 * [AndroidVerify](https://github.com/pchmn/AndroidVerify/)
-
