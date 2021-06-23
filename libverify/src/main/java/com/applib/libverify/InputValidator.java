@@ -4,6 +4,7 @@ import com.applib.libverify.validator.*;
 import ohos.agp.components.AttrSet;
 import ohos.agp.components.DependentLayout;
 import ohos.agp.components.TextField;
+import ohos.agp.utils.Color;
 import ohos.app.Context;
 import ohos.hiviewdfx.HiLog;
 import ohos.hiviewdfx.HiLogLabel;
@@ -17,10 +18,10 @@ public class InputValidator extends DependentLayout {
     // const
     public static final int IS_EMAIL = 0, IS_PHONE_NUMBER = 1, IS_NUMERIC = 2, IS_URL = 3, IS_IP = 4;
     private static final int NONE = -1;
-    // validator
+        // validator
     private AbstractValidator mValidator = new ValidateValidator();
     private RequiredValidator mRequiredValidator;
-    // errors
+    // errorss
     private boolean mShowError = true;
     // edit text
     private TextField mEditText;
@@ -35,9 +36,6 @@ public class InputValidator extends DependentLayout {
     private String mErrorMessage, mRequiredMessage;
     // build
     private boolean mBuilt = false;
-
-    private static final String ATTRIBUTE_REQUIRED = "required";
-    private static final String ATTRIBUTE_REQUIRED_MESSAGE = "required_message";
 
     public InputValidator(Context context) {
         super(context);
@@ -206,10 +204,15 @@ public class InputValidator extends DependentLayout {
         System.out.println("AMIT : TIV isValid 3");
 
         // reset error
+        mEditText.setHintColor(Color.GRAY);
 //        mEditText.setError(null);
 
         // test requirement
         if(!mRequiredValidator.isValid(value)) {
+            if(mShowError){
+                mEditText.setHint(mRequiredValidator.getmErrorMessage());
+                mEditText.setHintColor(Color.RED);
+            }
 //            if(mShowError) mEditText.setError(mRequiredValidator.getErrorMessage());
             System.out.println("AMIT : TIV isValid EXIT");
             return false;
@@ -218,6 +221,14 @@ public class InputValidator extends DependentLayout {
 
         // test validity
         if(value!=null && !value.isEmpty() && !mValidator.isValid(value)) {
+            if(mShowError) {
+                mEditText.setHint(mValidator.getmErrorMessage());
+                mEditText.setHintColor(Color.RED);
+                if(mValidator instanceof IdenticalValidator){
+                    mOtherEditText.setHint(mValidator.getmErrorMessage());
+                    mOtherEditText.setHintColor(Color.RED);
+                }
+            }
 //            if(mShowError) {
 //                mEditText.setError(mValidator.getErrorMessage());
 //                if(mValidator instanceof IdenticalValidator)
