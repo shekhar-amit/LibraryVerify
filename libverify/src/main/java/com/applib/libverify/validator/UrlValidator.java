@@ -1,6 +1,6 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.Patterns;
+import ohos.utils.CommonPattern;
 
 public class UrlValidator extends AbstractValidator {
 
@@ -10,8 +10,7 @@ public class UrlValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(String value) {
-
-        return Patterns.WEB_URL.matcher(value).matches();
+        return CommonPattern.getWebUrl().matcher(value).matches();
     }
 
     @Override

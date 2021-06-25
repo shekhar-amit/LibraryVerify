@@ -1,6 +1,6 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.Patterns;
+import ohos.utils.CommonPattern;
 
 public class EmailValidator extends AbstractValidator {
 
@@ -10,7 +10,7 @@ public class EmailValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(String value) {
-        return Patterns.EMAIL_ADDRESS.matcher(value).matches();
+        return CommonPattern.getEmailAddress().matcher(value).matches();
     }
 
     @Override

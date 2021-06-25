@@ -1,6 +1,6 @@
 package com.applib.libverify.validator;
 
-import com.applib.libverify.Patterns;
+import ohos.utils.CommonPattern;
 
 public class IPValidator extends AbstractValidator {
 
@@ -10,7 +10,7 @@ public class IPValidator extends AbstractValidator {
 
     @Override
     public boolean isValid(String value) {
-        return Patterns.IP_ADDRESS.matcher(value).matches();
+        return CommonPattern.getIpAddress().matcher(value).matches();
     }
 
     @Override
