@@ -14,7 +14,7 @@
   },
   "deviceConfig": {},
   "module": {
-    "package": "com.applib.libverify",
+    "package": "com.pchmn.libverify",
     "name": ".App",
     "deviceType": [
       "phone"

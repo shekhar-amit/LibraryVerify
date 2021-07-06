@@ -7,7 +7,7 @@
     ohos:orientation="vertical">
 
     <!-- form1 -->
-    <com.applib.libverify.Form
+    <com.pchmn.libverify.Form
         ohos:id="$+id:form1"
         ohos:orientation="vertical"
         ohos:width="match_parent"
@@ -15,7 +15,7 @@
         ohos:padding="16fp">
 
         <!-- email -->
-        <com.applib.libverify.InputValidator
+        <com.pchmn.libverify.InputValidator
             ohos:width="match_content"
             ohos:height="match_content">
 
@@ -25,10 +25,10 @@
                 ohos:text_size="20fp"
                 ohos:hint="Email"/>
 
-        </com.applib.libverify.InputValidator>
+        </com.pchmn.libverify.InputValidator>
 
         <!-- password -->
-        <com.applib.libverify.InputValidator
+        <com.pchmn.libverify.InputValidator
             ohos:width="match_content"
             ohos:height="match_content"
             app:required="true"
@@ -41,7 +41,7 @@
                 ohos:text_size="20fp"
                 ohos:hint="Password (6 char. min) *" />
 
-        </com.applib.libverify.InputValidator>
+        </com.pchmn.libverify.InputValidator>
 
         <!-- submit form -->
         <Button
@@ -51,11 +51,11 @@
             ohos:text_size="20fp"
             ohos:text="Validate form1"/>
 
-    </com.applib.libverify.Form>
+    </com.pchmn.libverify.Form>
     <!-- /form1 -->
 
     <!-- form2 -->
-    <com.applib.libverify.Form
+    <com.pchmn.libverify.Form
         ohos:id="$+id:form2"
         ohos:orientation="vertical"
         ohos:width="match_parent"
@@ -64,7 +64,7 @@
         ohos:padding="16fp">
 
         <!-- phone number -->
-        <com.applib.libverify.InputValidator
+        <com.pchmn.libverify.InputValidator
             ohos:id="$+id:tiv1"
             ohos:width="match_content"
             ohos:height="match_content"
@@ -77,10 +77,10 @@
                 ohos:text_size="20fp"
                 ohos:hint="Phone number *"/>
 
-        </com.applib.libverify.InputValidator>
+        </com.pchmn.libverify.InputValidator>
 
         <!-- age -->
-        <com.applib.libverify.InputValidator
+        <com.pchmn.libverify.InputValidator
             ohos:width="match_content"
             ohos:height="match_content"
             app:minValue="12">
@@ -92,7 +92,7 @@
                 ohos:text_size="20fp"
                 ohos:hint="Age (12 min)" />
 
-        </com.applib.libverify.InputValidator>
+        </com.pchmn.libverify.InputValidator>
 
         <!-- submit form -->
         <Button
@@ -102,7 +102,7 @@
             ohos:text_size="20fp"
             ohos:text="Validate form2"/>
 
-    </com.applib.libverify.Form>
+    </com.pchmn.libverify.Form>
     <!-- /form2 -->
 
 </DependentLayout>
