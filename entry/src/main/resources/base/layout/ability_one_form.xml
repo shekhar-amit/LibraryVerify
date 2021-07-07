@@ -18,6 +18,12 @@
             ohos:height="match_parent"
             ohos:padding="16fp">
 
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Custom Required Message"
+                ohos:text_size="15fp"/>
+
             <!-- custom required message -->
             <com.pchmn.libverify.InputValidator
                 ohos:width="match_content"
@@ -32,6 +38,12 @@
 
             </com.pchmn.libverify.InputValidator>
 
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Email"
+                ohos:text_size="15fp"/>
+
             <!-- email -->
             <com.pchmn.libverify.InputValidator
                 ohos:width="match_content"
@@ -45,6 +57,12 @@
                     ohos:hint="Email"/>
 
             </com.pchmn.libverify.InputValidator>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Phone Number"
+                ohos:text_size="15fp"/>
 
             <!-- phone number -->
             <com.pchmn.libverify.InputValidator
@@ -62,6 +80,11 @@
 
             </com.pchmn.libverify.InputValidator>
 
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Number"
+                ohos:text_size="15fp"/>
             <!-- number -->
             <com.pchmn.libverify.InputValidator
                 ohos:width="match_content"
@@ -75,6 +98,12 @@
                     ohos:hint="Number"/>
 
             </com.pchmn.libverify.InputValidator>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Regex"
+                ohos:text_size="15fp"/>
 
             <!-- regex -->
             <com.pchmn.libverify.InputValidator
@@ -90,6 +119,12 @@
                     ohos:hint="Regex 4 digits (custom error msg)"/>
 
             </com.pchmn.libverify.InputValidator>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Password"
+                ohos:text_size="15fp"/>
 
             <!-- password -->
             <com.pchmn.libverify.InputValidator
@@ -107,6 +142,12 @@
 
             </com.pchmn.libverify.InputValidator>
 
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Confirm Password"
+                ohos:text_size="15fp"/>
+
             <!-- confirm password -->
             <com.pchmn.libverify.InputValidator
                 ohos:width="match_content"
@@ -123,6 +164,12 @@
 
             </com.pchmn.libverify.InputValidator>
 
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="At least 6 characters long"
+                ohos:text_size="15fp"/>
+
             <!-- 6 characters min -->
             <com.pchmn.libverify.InputValidator
                 ohos:width="match_content"
@@ -136,6 +183,12 @@
                     ohos:hint="At least 6 characters long" />
 
             </com.pchmn.libverify.InputValidator>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Between 2 and 8 characters"
+                ohos:text_size="15fp"/>
 
             <!-- between 2 and 8 characters -->
             <com.pchmn.libverify.InputValidator
@@ -151,6 +204,12 @@
                     ohos:hint="Between 2 and 8 characters" />
 
             </com.pchmn.libverify.InputValidator>
+
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Value between 15 and 20"
+                ohos:text_size="15fp"/>
 
             <!-- between 15 and 50 -->
             <com.pchmn.libverify.InputValidator
@@ -168,7 +227,13 @@
 
             </com.pchmn.libverify.InputValidator>
 
-            <!-- between 15 and 50 -->
+            <Text
+                ohos:height="match_content"
+                ohos:width="match_content"
+                ohos:text="Custom Validator"
+                ohos:text_size="15fp"/>
+
+            <!-- Custom validator -->
             <com.pchmn.libverify.InputValidator
                 ohos:id="$+id:custom_validator"
                 ohos:width="match_content"

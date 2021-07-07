@@ -127,6 +127,6 @@ public class LengthValidatorTest extends ValidatorTest {
         assertEquals("Max length 5", mMaxLengthValidator.getErrorMessage());
         // range length
         mRangeLengthValidator.setErrorMessage("Between 2  and 5 characters");
-        assertEquals("Between 2  and 5 characters" ,mRangeLengthValidator.getErrorMessage());
+        assertEquals("Between 2  and 5 characters", mRangeLengthValidator.getErrorMessage());
     }
 }

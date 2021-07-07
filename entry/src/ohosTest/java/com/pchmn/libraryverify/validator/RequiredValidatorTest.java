@@ -2,6 +2,8 @@ package com.pchmn.libraryverify.validator;
 
 import com.pchmn.libverify.validator.RequiredValidator;
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +12,7 @@ public class RequiredValidatorTest extends ValidatorTest {
     private RequiredValidator mRequiredValidator;
     private RequiredValidator mNotRequiredValidator;
 
+    @Before
     @Override
     public void setUp() {
         mContext = AbilityDelegatorRegistry.getAbilityDelegator().getAppContext();
@@ -17,6 +20,7 @@ public class RequiredValidatorTest extends ValidatorTest {
         mNotRequiredValidator = new RequiredValidator(false);
     }
 
+    @Test
     @Override
     public void validate() {
         // required
@@ -29,9 +33,10 @@ public class RequiredValidatorTest extends ValidatorTest {
         assertTrue(mNotRequiredValidator.isValid("123"));
     }
 
+    @Test
     @Override
     public void message() {
         mRequiredValidator.setErrorMessage("required");
-        assertEquals(mRequiredValidator.getErrorMessage(), "required");
+        assertEquals("required", mRequiredValidator.getErrorMessage());
     }
 }

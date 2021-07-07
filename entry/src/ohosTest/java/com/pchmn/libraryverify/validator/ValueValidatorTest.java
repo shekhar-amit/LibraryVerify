@@ -4,6 +4,7 @@ import com.pchmn.libverify.validator.MaxValueValidator;
 import com.pchmn.libverify.validator.MinValueValidator;
 import com.pchmn.libverify.validator.RangeValueValidator;
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,6 +15,7 @@ public class ValueValidatorTest extends ValidatorTest {
     private MaxValueValidator mMaxValueValidator;
     private RangeValueValidator mRangeValueValidator;
 
+    @Before
     @Override
     public void setUp() {
         mContext = AbilityDelegatorRegistry.getAbilityDelegator().getAppContext();
@@ -22,6 +24,7 @@ public class ValueValidatorTest extends ValidatorTest {
         mRangeValueValidator = new RangeValueValidator(0, 10);
     }
 
+    @Test
     @Override
     public void validate() {
         // min value
@@ -72,21 +75,22 @@ public class ValueValidatorTest extends ValidatorTest {
         }
     }
 
+    @Test
     @Override
     public void message() {
         // min value
         mMinValueValidator.setErrorMessage("min");
-        assertEquals(mMinValueValidator.getErrorMessage(), "min");
+        assertEquals("min", mMinValueValidator.getErrorMessage());
         // invalid number
         assertFalse(mMinValueValidator.isValid("abc"));
         // max value
         mMaxValueValidator.setErrorMessage("max");
-        assertEquals(mMaxValueValidator.getErrorMessage(), "max");
+        assertEquals("max", mMaxValueValidator.getErrorMessage());
         // invalid number
         assertFalse(mMaxValueValidator.isValid("abc"));
         // range value
         mRangeValueValidator.setErrorMessage("range");
-        assertEquals(mRangeValueValidator.getErrorMessage(), "range");
+        assertEquals("range", mRangeValueValidator.getErrorMessage());
         // invalid number
         assertFalse(mRangeValueValidator.isValid("abc"));
     }

@@ -16,19 +16,20 @@ import com.pchmn.libverify.validator.RegexValidator;
 import com.pchmn.libverify.validator.RequiredValidator;
 import com.pchmn.libverify.validator.UrlValidator;
 import com.pchmn.libverify.validator.ValidateValidator;
+import ohos.agp.components.Attr;
 import ohos.agp.components.AttrSet;
 import ohos.agp.components.DependentLayout;
 import ohos.agp.components.TextField;
 import ohos.agp.utils.Color;
 import ohos.app.Context;
 
+import java.util.Optional;
+
 /**
  *  InputValidators are used to validate text fields.
  */
 public class InputValidator extends DependentLayout {
 
-    // context
-    private Context mContext;
     // const
     public static final int IS_EMAIL = 0;
     public static final int IS_PHONE_NUMBER = 1;
@@ -93,26 +94,67 @@ public class InputValidator extends DependentLayout {
     private void init(AttrSet attrs) {
         // attributes
         if (attrs != null) {
-            this.mRequired = attrs.getAttr("required").isPresent() ? attrs.getAttr(
-                    "required").get().getBoolValue() : false;
-            this.mValidatorNumber = attrs.getAttr("validator").isPresent() ? attrs.getAttr(
-                    "validator").get().getIntegerValue() : NONE;
-            this.mMinLength = attrs.getAttr("minLength").isPresent() ? attrs.getAttr(
-                    "minLength").get().getIntegerValue() : NONE;
-            this.mMaxLength = attrs.getAttr("maxLength").isPresent() ? attrs.getAttr(
-                    "maxLength").get().getIntegerValue() : NONE;
-            this.mMinValue = attrs.getAttr("minValue").isPresent() ? attrs.getAttr(
-                    "minValue").get().getIntegerValue() : NONE;
-            this.mMaxValue = attrs.getAttr("maxValue").isPresent() ? attrs.getAttr(
-                    "maxValue").get().getIntegerValue() : NONE;
-            this.mRegex = attrs.getAttr("regex").isPresent() ? attrs.getAttr(
-                    "regex").get().getStringValue() : null;
-            this.mOtherEditTextId = attrs.getAttr("identicalAs").isPresent() ? attrs.getAttr(
-                    "identicalAs").get().getIntegerValue() : NONE;
-            this.mErrorMessage = attrs.getAttr("errorMessage").isPresent() ? attrs.getAttr(
-                    "errorMessage").get().getStringValue() : null;
-            this.mRequiredMessage = attrs.getAttr("requiredMessage").isPresent() ? attrs.getAttr(
-                    "requiredMessage").get().getStringValue() : null;
+            Optional<Attr> attrRequired = attrs.getAttr("required");
+            if (attrRequired.isPresent()) {
+                mRequired = attrRequired.get().getBoolValue();
+            } else {
+                mRequired = false;
+            }
+            Optional<Attr> attrValidatorNumber = attrs.getAttr("validator");
+            if (attrValidatorNumber.isPresent()) {
+                mValidatorNumber = attrValidatorNumber.get().getIntegerValue();
+            } else {
+                mValidatorNumber = NONE;
+            }
+            Optional<Attr> attrMinLength = attrs.getAttr("minLength");
+            if (attrMinLength.isPresent()) {
+                mMinLength = attrMinLength.get().getIntegerValue();
+            } else {
+                mMinLength = NONE;
+            }
+            Optional<Attr> attrMaxLength = attrs.getAttr("maxLength");
+            if (attrMaxLength.isPresent()) {
+                mMaxLength = attrMaxLength.get().getIntegerValue();
+            } else {
+                mMaxLength = NONE;
+            }
+
+            Optional<Attr> attrMinValue = attrs.getAttr("minValue");
+            if (attrMinValue.isPresent()) {
+                mMinValue = attrMinValue.get().getIntegerValue();
+            } else {
+                mMinValue = NONE;
+            }
+            Optional<Attr> attrMaxValue = attrs.getAttr("maxValue");
+            if (attrMaxValue.isPresent()) {
+                mMaxValue = attrMaxValue.get().getIntegerValue();
+            } else {
+                mMaxValue = NONE;
+            }
+            Optional<Attr> attrRegex = attrs.getAttr("regex");
+            if (attrRegex.isPresent()) {
+                mRegex = attrRegex.get().getStringValue();
+            } else {
+                mRegex = null;
+            }
+            Optional<Attr> attrOtherEditTextId = attrs.getAttr("identicalAs");
+            if (attrOtherEditTextId.isPresent()) {
+                mOtherEditTextId = attrOtherEditTextId.get().getIntegerValue();
+            } else {
+                mOtherEditTextId = NONE;
+            }
+            Optional<Attr> attrErrorMessage = attrs.getAttr("errorMessage");
+            if (attrErrorMessage.isPresent()) {
+                mErrorMessage = attrErrorMessage.get().getStringValue();
+            } else {
+                mErrorMessage = null;
+            }
+            Optional<Attr> attrRequiredMessage = attrs.getAttr("requiredMessage");
+            if (attrRequiredMessage.isPresent()) {
+                mRequiredMessage = attrRequiredMessage.get().getStringValue();
+            } else {
+                mRequiredMessage = null;
+            }
         }
     }
 
@@ -168,7 +210,7 @@ public class InputValidator extends DependentLayout {
             // only one edit text per input validator
             if (childCount == 0 || childCount > 1) {
                 try {
-                    throw new Exception("InputValidator must contain only one EditText");
+                    throw new InvalidUIException("InputValidator must contain only one EditText");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -191,7 +233,10 @@ public class InputValidator extends DependentLayout {
         if (mOtherEditText != null) {
             mValidator = new IdenticalValidator(mOtherEditText);
         } else if (mOtherEditTextId != NONE) {
+            System.out.println("AMIT : getOtherEditText " + mOtherEditTextId);
             mOtherEditText = (TextField) findComponentById(mOtherEditTextId);
+            if(mOtherEditText==null)
+                System.out.println("AMIT : It is NULL ");
             mValidator = new IdenticalValidator(mOtherEditText);
         }
     }
@@ -245,6 +290,7 @@ public class InputValidator extends DependentLayout {
             if (mShowError) {
                 mEditText.setHint(mRequiredValidator.getErrorMessage());
                 mEditText.setHintColor(Color.RED);
+                mEditText.setText("");
             }
             return false;
         }
@@ -254,9 +300,11 @@ public class InputValidator extends DependentLayout {
             if (mShowError) {
                 mEditText.setHint(mValidator.getErrorMessage());
                 mEditText.setHintColor(Color.RED);
+                mEditText.setText("");
                 if (mValidator instanceof IdenticalValidator) {
                     mOtherEditText.setHint(mValidator.getErrorMessage());
                     mOtherEditText.setHintColor(Color.RED);
+                    mOtherEditText.setText("");
                 }
             }
             return false;
@@ -535,6 +583,12 @@ public class InputValidator extends DependentLayout {
         InputValidator.setShowError(builder.showError);
         InputValidator.buildValidator();
         return InputValidator;
+    }
+
+    class InvalidUIException extends Exception {
+        public InvalidUIException(String s) {
+            super(s);
+        }
     }
 
 }

@@ -2,17 +2,21 @@ package com.pchmn.libraryverify.validator;
 
 import com.pchmn.libverify.validator.UrlValidator;
 import ohos.aafwk.ability.delegation.AbilityDelegatorRegistry;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class UrlValidatorTest extends ValidatorTest {
 
+    @Before
     @Override
     public void setUp() {
         mContext = AbilityDelegatorRegistry.getAbilityDelegator().getAppContext();
         mValidator = new UrlValidator();
     }
 
+    @Test
     @Override
     public void validate() {
         assertTrue(mValidator.isValid("www.google.com"));
@@ -24,9 +28,10 @@ public class UrlValidatorTest extends ValidatorTest {
         assertFalse(mValidator.isValid("http://google"));
     }
 
+    @Test
     @Override
     public void message() {
         mValidator.setErrorMessage("url");
-        assertEquals(mValidator.getErrorMessage(), "url");
+        assertEquals("url", mValidator.getErrorMessage());
     }
 }

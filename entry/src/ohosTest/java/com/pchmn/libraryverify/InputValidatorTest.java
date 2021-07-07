@@ -88,17 +88,7 @@ public class InputValidatorTest {
         mEditText.setText("ab");
         assertFalse(inputValidator.isValid());
 
-        // negative min length
-        try {
-            inputValidator = new InputValidator.Builder(mContext)
-                    .minLength(-3)
-                    .build();
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            // good
-        }
-    }
+   }
 
     @Test
     public void maxLength() {
@@ -115,16 +105,6 @@ public class InputValidatorTest {
         mEditText.setText("abcd");
         assertFalse(inputValidator.isValid());
 
-        // negative min length
-        try {
-            inputValidator = new InputValidator.Builder(mContext)
-                    .maxLength(-3)
-                    .build();
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            // good
-        }
     }
 
     @Test
@@ -147,17 +127,6 @@ public class InputValidatorTest {
         mEditText.setText("a");
         assertFalse(inputValidator.isValid());
 
-        // min length > max length
-        try {
-            inputValidator = new InputValidator.Builder(mContext)
-                    .minLength(3)
-                    .maxLength(1)
-                    .build();
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            // good
-        }
     }
 
     @Test
@@ -218,17 +187,6 @@ public class InputValidatorTest {
         mEditText.setText("4");
         assertFalse(inputValidator.isValid());
 
-        // min value > max value
-        try {
-            inputValidator = new InputValidator.Builder(mContext)
-                    .minValue(10)
-                    .maxValue(5)
-                    .build();
-            fail();
-        }
-        catch (IllegalArgumentException e) {
-            // good
-        }
     }
 
     @Test
