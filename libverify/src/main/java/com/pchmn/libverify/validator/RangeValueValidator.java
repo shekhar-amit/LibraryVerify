@@ -34,7 +34,7 @@ public class RangeValueValidator extends AbstractValidator {
             mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd + mMaxValue;
             return d >= mMinValue && d <= mMaxValue;
         } catch (NumberFormatException nfe) {
-            mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd+ mMaxValue;
+            mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd + mMaxValue;
             return false;
         }
     }

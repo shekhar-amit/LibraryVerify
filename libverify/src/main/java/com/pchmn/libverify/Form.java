@@ -3,9 +3,11 @@ package com.pchmn.libverify;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import ohos.aafwk.ability.Ability;
-import ohos.agp.components.*;
+import ohos.agp.components.Attr;
+import ohos.agp.components.AttrSet;
+import ohos.agp.components.Component;
+import ohos.agp.components.ComponentContainer;
+import ohos.agp.components.DirectionalLayout;
 import ohos.app.Context;
 
 /**
