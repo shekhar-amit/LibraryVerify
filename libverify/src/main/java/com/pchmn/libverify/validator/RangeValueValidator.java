@@ -24,17 +24,17 @@ public class RangeValueValidator extends AbstractValidator {
 
         mMinValue = minValue;
         mMaxValue = maxValue;
-        mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd + mMinValue;
+        mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd + mMaxValue;
     }
 
     @Override
     public boolean isValid(String value) {
         try {
             double d = Double.parseDouble(value);
-            mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd + mMinValue;
+            mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd + mMaxValue;
             return d >= mMinValue && d <= mMaxValue;
         } catch (NumberFormatException nfe) {
-            mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd+ mMinValue;
+            mErrorMessage = mErrorPrefix + mMinValue + mErrorAnd+ mMaxValue;
             return false;
         }
     }

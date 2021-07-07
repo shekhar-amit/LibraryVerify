@@ -208,7 +208,7 @@
             <Text
                 ohos:height="match_content"
                 ohos:width="match_content"
-                ohos:text="Value between 15 and 20"
+                ohos:text="Value between 15 and 50"
                 ohos:text_size="15fp"/>
 
             <!-- between 15 and 50 -->

@@ -16,10 +16,7 @@ import com.pchmn.libverify.validator.RegexValidator;
 import com.pchmn.libverify.validator.RequiredValidator;
 import com.pchmn.libverify.validator.UrlValidator;
 import com.pchmn.libverify.validator.ValidateValidator;
-import ohos.agp.components.Attr;
-import ohos.agp.components.AttrSet;
-import ohos.agp.components.DependentLayout;
-import ohos.agp.components.TextField;
+import ohos.agp.components.*;
 import ohos.agp.utils.Color;
 import ohos.app.Context;
 
@@ -102,7 +99,20 @@ public class InputValidator extends DependentLayout {
             }
             Optional<Attr> attrValidatorNumber = attrs.getAttr("validator");
             if (attrValidatorNumber.isPresent()) {
-                mValidatorNumber = attrValidatorNumber.get().getIntegerValue();
+                String mValidatorType = attrValidatorNumber.get().getStringValue();
+                if(mValidatorType.equals("isEmail")){
+                    mValidatorNumber = IS_EMAIL;
+                } else if(mValidatorType.equals("isPhoneNumber")){
+                    mValidatorNumber = IS_PHONE_NUMBER;
+                } else if(mValidatorType.equals("isUrl")){
+                    mValidatorNumber = IS_URL;
+                } else if(mValidatorType.equals("isIP")){
+                    mValidatorNumber = IS_IP;
+                } else if(mValidatorType.equals("isNumeric")){
+                    mValidatorNumber = IS_NUMERIC;
+                } else {
+                    mValidatorNumber = NONE;
+                }
             } else {
                 mValidatorNumber = NONE;
             }
@@ -164,6 +174,20 @@ public class InputValidator extends DependentLayout {
      */
     private void buildValidator() {
 
+        if (mEditText == null) {
+            // get edit text
+            int childCount = getChildCount();
+            // only one edit text per input validator
+            if (childCount == 0 || childCount > 1) {
+                try {
+                    throw new InvalidUIException("InputValidator must contain only one EditText");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            mEditText = (TextField) getComponentAt(0);
+        }
+
         // get views
         getOtherEditText();
 
@@ -204,20 +228,6 @@ public class InputValidator extends DependentLayout {
             mRequiredValidator.setErrorMessage(mRequiredMessage);
         }
 
-        if (mEditText == null) {
-            // get edit text
-            int childCount = getChildCount();
-            // only one edit text per input validator
-            if (childCount == 0 || childCount > 1) {
-                try {
-                    throw new InvalidUIException("InputValidator must contain only one EditText");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            mEditText = (TextField) getComponentAt(0);
-        }
-
         // mBuilt
         mBuilt = true;
     }
@@ -234,7 +244,11 @@ public class InputValidator extends DependentLayout {
             mValidator = new IdenticalValidator(mOtherEditText);
         } else if (mOtherEditTextId != NONE) {
             System.out.println("AMIT : getOtherEditText " + mOtherEditTextId);
-            mOtherEditText = (TextField) findComponentById(mOtherEditTextId);
+            ComponentParent mComponentParent = mEditText.getComponentParent().getComponentParent();
+            if(mComponentParent instanceof ComponentContainer){
+                ComponentContainer mComponentContainer = (ComponentContainer) mComponentParent;
+                mOtherEditText = (TextField) mComponentContainer.findComponentById(mOtherEditTextId);
+            }
             if(mOtherEditText==null)
                 System.out.println("AMIT : It is NULL ");
             mValidator = new IdenticalValidator(mOtherEditText);
